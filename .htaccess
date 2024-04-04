@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Rewrite rule for login
+RewriteRule ^login$ login.php [L]
+
+# Rewrite rule for welcome
+RewriteRule ^welcome$ welcome.php [L]
+
+# Rewrite rule for logout
+RewriteRule ^logout$ logout.php [L]
