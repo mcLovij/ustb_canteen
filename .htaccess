@@ -6,5 +6,8 @@ RewriteRule ^login$ login.php [L]
 # Rewrite rule for welcome
 RewriteRule ^welcome$ welcome.php [L]
 
+# Rewrite rule for welcome
+RewriteRule ^welcomes$ welcomes.php [L]
+
 # Rewrite rule for logout
 RewriteRule ^logout$ logout.php [L]

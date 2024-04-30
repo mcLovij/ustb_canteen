@@ -20,20 +20,29 @@ if(isset($_POST['foodId'], $_POST['locationId'], $_POST['quantity'])) {
     // If not, you should handle the username securely
     $userName = $_SESSION['userName'];
 
-    // Generate a random chooseId that is not already in the shopping_cart table
-    do {
-        $chooseId = generateRandomId();
-        $check_query = "SELECT chooseId FROM shopping_cart WHERE chooseId = $chooseId";
-        $check_result = $conn->query($check_query);
-    } while ($check_result->num_rows > 0);
+    // Check if the foodId already exists in the shopping_cart table for the logged-in user
+    $check_query = "SELECT * FROM shopping_cart WHERE userName = '$userName' AND foodId = '$foodId'";
+    $check_result = $conn->query($check_query);
 
-    // Insert order into the database
-    $sql = "INSERT INTO `shopping_cart` (chooseId, userName, foodId, canteenId, quantity) VALUES ('$chooseId', '$userName', '$foodId', '$locationId', '$quantity')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Order added successfully";
+    // If the foodId already exists, do not add a new order
+    if ($check_result->num_rows > 0) {
+        echo "Error: This food item is already in your shopping cart.";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        // Generate a random chooseId that is not already in the shopping_cart table
+        do {
+            $chooseId = generateRandomId();
+            $check_query = "SELECT chooseId FROM shopping_cart WHERE chooseId = $chooseId";
+            $check_result = $conn->query($check_query);
+        } while ($check_result->num_rows > 0);
+
+        // Insert order into the database
+        $sql = "INSERT INTO `shopping_cart` (chooseId, userName, foodId, canteenId, quantity) VALUES ('$chooseId', '$userName', '$foodId', '$locationId', '$quantity')";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "Order added successfully";
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
     }
 } else {
     echo "Error: Required parameters are missing";

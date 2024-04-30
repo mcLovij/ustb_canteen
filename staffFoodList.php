@@ -94,23 +94,23 @@
 <?php
 require_once "config.php";
 
-// Fetch unique canteen names
-$sql = "SELECT DISTINCT canteenName FROM location";
-$result = $conn->query($sql);
-$canteenNames = array();
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $canteenNames[] = $row['canteenName'];
-    }
-}
-
-// Generate buttons for each canteen
-echo "<div class='filter'><div onclick=\"showAllRows()\" class=\"filter_div filter_button\">Show All</div>";
-foreach ($canteenNames as $index => $canteenName) {
-    echo "<div onclick=\"filterTableByCanteen('$canteenName', this)\" class=\"filter_div filter_button\">$canteenName</div>";
-}
-//echo "</div>";
-?>
+//// Fetch unique canteen names
+//$sql = "SELECT DISTINCT canteenName FROM location";
+//$result = $conn->query($sql);
+//$canteenNames = array();
+//if ($result->num_rows > 0) {
+//    while ($row = $result->fetch_assoc()) {
+//        $canteenNames[] = $row['canteenName'];
+//    }
+//}
+//
+//// Generate buttons for each canteen
+//echo "<div class='filter'><div onclick=\"showAllRows()\" class=\"filter_div filter_button\">Show All</div>";
+//foreach ($canteenNames as $index => $canteenName) {
+//    echo "<div onclick=\"filterTableByCanteen('$canteenName', this)\" class=\"filter_div filter_button\">$canteenName</div>";
+//}
+////echo "</div>";
+//?>
 <!-- Add the input field for food name search -->
 <input type="text" id="searchInput" onkeyup="filterByName()" placeholder="Search by Food Name...">
 
@@ -195,22 +195,25 @@ foreach ($canteenNames as $index => $canteenName) {
         <th>Floor</th>
         <th>Rate</th>
         <th>Price</th>
-        <th>Status</th>
-        <th>Order</th>
     </tr>
     </thead>
     <tbody>
     <?php
-    require_once "config.php";
+    if (!isset($_SESSION['staffUserName'])) {
+        header("Location: login");
+        exit();
+    }
+    $staffUserName = $_SESSION['staffUserName'];
 
     // Fetch food list with status for the logged-in user
-    $sql = "SELECT food_list.*, location.canteenName AS canteenName, 
-        IF(student_favorite.userName IS NULL, 0, 1) AS status
-        FROM food_list
-        LEFT JOIN location ON food_list.canteenId = location.canteenId
-        LEFT JOIN student_favorite ON food_list.foodId = student_favorite.foodId 
-        AND student_favorite.userName = '$userName'";
+    $sql = "SELECT food_list.*, 
+       location.canteenName AS canteenName
+FROM food_list
+LEFT JOIN location ON food_list.canteenId = location.canteenId
+WHERE food_list.canteenId = (SELECT staff_detail.canteenId FROM staff_detail WHERE staff_detail.staffUserName = '$staffUserName')
+";
     $result = $conn->query($sql);
+
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
@@ -222,13 +225,8 @@ foreach ($canteenNames as $index => $canteenName) {
             echo "<td>" . $row['floor'] . "层</td>";
             echo "<td>" . $row['foodRate'] . "分</td>";
             echo "<td>￥" . $row['foodPrice'] . "</td>";
-            if ($row['status'] == 1) {
-                echo "<td><span id='star_" . $row['foodId'] . "' class='star star-yellow' onclick='toggleFavorite(" . $row['foodId'] . ", 0)'>&#9733;</span></td>";
-            } else {
-                echo "<td><span id='star_" . $row['foodId'] . "' class='star star-outline' onclick='toggleFavorite(" . $row['foodId'] . ", 1)'>&#9733;</span></td>";
-            }
             // Add button to add the item to the order list
-            echo "<td><button onclick='showOrderPopup(" . $row['foodId'] . ", \"" . $row['foodName'] . "\", \"" . $row['foodImage'] . "\", \"" . $row['foodRate'] . "\", " . $row['foodPrice'] . ", \"" . $row['canteenName'] . "\", \"" . $row['canteenId'] . "\")'>Order</button></td>";
+
 
             echo "</tr>";
             echo "</tr>";

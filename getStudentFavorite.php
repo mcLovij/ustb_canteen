@@ -1,4 +1,4 @@
-<table border="1">
+<table id="favoriteFoodsTable" border="1">
     <thead>
     <tr>
         <th>Food Name</th>
@@ -20,7 +20,7 @@
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
             echo "<td>" . $row['foodName'] . "</td>";
-            echo "<td>$" . $row['foodPrice'] . "</td>";
+            echo "<td>￥" . $row['foodPrice'] . "</td>";
             echo "<td>" . $row['foodDetail'] . "</td>";
             echo "<td>" . $row['foodRate'] . "</td>";
             echo "<td><img style='height: 100px;' src='" . $row['foodImage'] . "' alt='Food Image'></td>";
