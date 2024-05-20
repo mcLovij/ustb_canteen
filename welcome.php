@@ -123,43 +123,48 @@ $userName = $_SESSION['userName'];
     </script>
 </head>
 <body>
-<div class="navbar">
-    <a href="#" onclick="showDashboard()" id="dashboardLink">首页</a>
-    <a href="#" onclick="showOrder()" id="orderLink">购物车</a>
-    <a href="#" onclick="showNews()" id="newsLink">公告</a>
-    <a href="#" onclick="showProfile()" id="profileLink"><?php require_once "getStudentDetailAction.php"; echo $name; ?></a>
+<!--<div class="navbar">-->
+<!--    <a href="#" onclick="showDashboard()" id="dashboardLink">首页</a>-->
+<!--    <a href="#" onclick="showOrder()" id="orderLink">购物车</a>-->
+<!--    <a href="#" onclick="showNews()" id="newsLink">公告</a>-->
+<!--    <a href="#" onclick="showProfile()" id="profileLink">--><?php //require_once "getStudentDetailAction.php"; echo $name; ?><!--</a>-->
+<!---->
+<!--</div>-->
+<!--<div id="dashboardSection" style="display: none;">-->
+<!--     --><?php //require_once "getOrder.php"; ?><!-- -->
+<!--     <h3>Recommendation</h3>-->
+<!--    --><?php //require_once "getRecommendation.php"; ?>
+<!--    <h3>Student Favorite</h3>-->
+<!--    --><?php //require_once "getStudentFavorite.php"; ?><!-- -->
+<!--    <h3>Food List</h3>-->
+<!--    --><?php //require_once "getFoodList.php"; ?>
+<!--</div>-->
+<!---->
+<!--<div id="shoppingCartSection" style="display: none;">-->
+<?php //require_once "getShoppingCart.php"; ?>
+<!--</div>-->
+<!---->
+<!--<div id="newsSection" style="display: none;">-->
+<!---->
+<!--    --><?php //require_once "getAnnouncement.php"; ?>
+<!--</div>-->
+<!---->
+<!--<div id="profileSection" style="display: none;">-->
+<!--    --><?php //require_once "getStudentDetailAction.php"; ?>
+<!--    <p>Your name: --><?php //echo $name; ?><!--</p>-->
+<!--    --><?php //if (!empty($profile)): ?>
+<!--        <img style="height: 50px;" src="--><?php //echo $profile; ?><!--" alt="--><?php //echo $name; ?><!--"><br>-->
+<!--    --><?php //endif; ?>
+<!---->
+<!---->
+<!--    <form method="post" action="logout.php"><input type="submit" value="Logout"></form>-->
+<!--    <p>This is the welcome page. You are logged in as --><?php //echo $userName; ?><!--.</p>-->
+<!--</div>-->
 
-</div>
-<div id="dashboardSection" style="display: none;">
-    <!-- <?php require_once "getOrder.php"; ?> -->
-    <!-- <h3>Recommendation</h3>
-    <?php require_once "getRecommendation.php"; ?>
-    <h3>Student Favorite</h3>
-    <?php require_once "getStudentFavorite.php"; ?> -->
-    <h3>Food List</h3>
-    <?php require_once "getFoodList.php"; ?>
-</div>
 
-<div id="shoppingCartSection" style="display: none;">
-<?php require_once "getShoppingCart.php"; ?>
-</div>
-
-<div id="newsSection" style="display: none;">
-
-    <?php require_once "getAnnouncement.php"; ?>
-</div>
-
-<div id="profileSection" style="display: none;">
-    <?php require_once "getStudentDetailAction.php"; ?>
-    <p>Your name: <?php echo $name; ?></p>
-    <?php if (!empty($profile)): ?>
-        <img style="height: 50px;" src="<?php echo $profile; ?>" alt="<?php echo $name; ?>"><br>
-    <?php endif; ?>
-
-
-    <form method="post" action="logout.php"><input type="submit" value="Logout"></form>
-    <p>This is the welcome page. You are logged in as <?php echo $userName; ?>.</p>
-</div>
+<?php require_once "getRecommendation.php"; ?>
+<?php require_once "getStudentFavorite.php"; ?>
+<?php require_once "getFoodList.php"; ?>
 
 </body>
 </html>

@@ -19,12 +19,19 @@ if ($result->num_rows > 0) {
     }
 
     // Fetch details for recommended food from food_list table
-    $sql = "SELECT fl.foodName, fl.foodPrice,  fl.floor, b.image ,l.canteenName
+    $sql = "SELECT fl.foodName, fl.foodPrice,  fl.floor, fl.bannerImg ,l.canteenName
             FROM food_list fl
-            JOIN banner b ON fl.foodId = b.foodId
+            JOIN recommendation r ON fl.foodId = r.foodId
             JOIN location l ON fl.canteenId =l.canteenId
             WHERE fl.foodId IN (" . implode(",", $recommendedFoodIds) . ")";
     $result = $conn->query($sql);
+
+//    $sql = "SELECT fl.foodName, fl.foodPrice,  fl.floor, b.image ,l.canteenName
+//            FROM food_list fl
+//            JOIN banner b ON fl.foodId = b.foodId
+//            JOIN location l ON fl.canteenId =l.canteenId
+//            WHERE fl.foodId IN (" . implode(",", $recommendedFoodIds) . ")";
+//    $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         // Display banner images with food details
@@ -32,7 +39,7 @@ if ($result->num_rows > 0) {
         echo '<div id="slider" class="slider">';
         while ($row = $result->fetch_assoc()) {
             echo '<div class="slide">';
-            echo '<img src="' . $row['image'] . '" alt="Banner Image">';
+            echo '<img src="' . $row['bannerImg'] . '" alt="Banner Image">';
             echo '<div class="food-details">';
             echo '<p>Name: ' . $row['foodName'] . ' Price: $' . $row['foodPrice'] . 'Canteen ID: ' . $row['canteenName'] . 'Floor: ' . $row['floor'] . '</p>';
             echo '</div>';
