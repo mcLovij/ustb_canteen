@@ -131,11 +131,11 @@ $userName = $_SESSION['userName'];
 
 </div>
 <div id="dashboardSection" style="display: none;">
-    <?php require_once "getOrder.php"; ?>
-    <h3>Recommendation</h3>
+    <!-- <?php require_once "getOrder.php"; ?> -->
+    <!-- <h3>Recommendation</h3>
     <?php require_once "getRecommendation.php"; ?>
     <h3>Student Favorite</h3>
-    <?php require_once "getStudentFavorite.php"; ?>
+    <?php require_once "getStudentFavorite.php"; ?> -->
     <h3>Food List</h3>
     <?php require_once "getFoodList.php"; ?>
 </div>
