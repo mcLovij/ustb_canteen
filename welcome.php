@@ -16,6 +16,12 @@ $userName = $_SESSION['userName'];
     <link rel="icon" href="<?php require_once "getStudentDetailAction.php"; echo $profile; ?>">
     <title>你好<?php require_once "getStudentDetailAction.php"; echo $name; ?>同学</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
         .navbar {
             overflow: hidden;
             background-color: #ffffff;
@@ -24,7 +30,6 @@ $userName = $_SESSION['userName'];
         .navbar a {
             float: left;
             display: block;
-            color: #b0b0b0;
             text-align: center;
             text-decoration: none;
             color: black;
@@ -145,8 +150,7 @@ $userName = $_SESSION['userName'];
 </div>
 
 <div id="newsSection" style="display: none;">
-
-<!--    --><?php //require_once "getAnnouncement.php"; ?>
+    <?php require_once "getAnnouncement.php"; ?>
 </div>
 
 <div id="profileSection" style="display: none;">
