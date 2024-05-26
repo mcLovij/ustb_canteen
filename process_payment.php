@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     SELECT ?, ?, foodId, canteenId, 0, quantity FROM shopping_cart WHERE chooseId = ?");
             $stmt->bind_param("isi", $itemChooseId, $userName, $foodId);
             if (!$stmt->execute()) {
-                echo "Error: " . $stmt->error; // Print error message if query execution fails
+                echo "Error: " . $stmt->error;
                 exit();
             }
             $stmt->close();
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt = $conn->prepare("DELETE FROM shopping_cart WHERE chooseId = ? AND userName = ?");
             $stmt->bind_param("is", $foodId, $userName);
             if (!$stmt->execute()) {
-                echo "Error: " . $stmt->error; // Print error message if query execution fails
+                echo "Error: " . $stmt->error;
                 exit();
             }
             $stmt->close();
@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("idi", $itemChooseId, $totalCheckedItemsPrice, $totalItem);
 
         if (!$stmt->execute()) {
-            echo "Error: " . $stmt->error; // Print error message if query execution fails
+            echo "Error: " . $stmt->error;
             exit();
         }
         $stmt->close();

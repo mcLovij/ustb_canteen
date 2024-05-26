@@ -166,11 +166,7 @@ $userName = $_SESSION['userName'];
 </div>
 
 
-<?php ////require_once "getRecommendation.php"; ?>
-<?php ////require_once "getStudentFavorite.php"; ?>
-<?php //require_once "getFoodList.php"; ?>
-<?php //require_once "getShoppingCart.php"; ?>
-<?php //require_once "getOrder.php"; ?>
+
 </body>
 </html>
 

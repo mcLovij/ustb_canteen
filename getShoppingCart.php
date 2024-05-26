@@ -5,11 +5,12 @@ if (!isset($_SESSION['userName'])) {
 }
 require_once "config.php";
 $userName = $_SESSION['userName'];
-$sql = "SELECT sc.chooseId, fl.foodName, sc.chooseTime, l.canteenName, sc.quantity, fl.foodImage,fl.foodPrice,fl.foodDetail
+$sql = "SELECT sc.chooseId, fl.foodName, sc.chooseTime, l.canteenName, sc.quantity, fl.foodImage, fl.foodPrice, fl.foodDetail,sc.chooseTime
         FROM `shopping_cart` sc
         INNER JOIN `food_list` fl ON sc.foodId = fl.foodId
         INNER JOIN `location` l ON sc.canteenId = l.canteenId
-        WHERE sc.`userName`='$userName'";
+        WHERE sc.`userName`='$userName'
+        ORDER BY sc.chooseTime DESC";
 $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
@@ -22,55 +23,41 @@ $result = $conn->query($sql);
 <body>
 <h2>Shopping Cart</h2>
 <form method="post" action="process_payment.php">
-    <input type="hidden" name="totalCheckedItemsPrice" value="<?php echo $totalCheckedItemsPrice; ?>">
-
-    <table border="1">
-        <tr>
-            <th>Check</th>
-            <th>Food Name</th>
-            <th>Food Detail</th>
-            <th>Food Image</th>
-            <th>Canteen Name</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Total Price</th>
-            <th>Delete</th>
-        </tr>
+    <div class="cart-container">
         <?php
         $totalCheckedItemsPrice = 0;
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td><input type='checkbox' name='checkedItems[]' value='" . $row["chooseId"] . "'></td>"; // Checkbox
-                echo "<td>" . $row["foodName"] . "</td>";
-                echo "<td>" . $row["foodDetail"] . "</td>";
-                echo "<td><img src='" . $row["foodImage"] . "' width='100' ></td>";
-                echo "<td>" . $row["canteenName"] . "</td>";
-                echo "<td>" . $row["quantity"] . "</td>";
-                echo "<td>" . $row["foodPrice"] . "</td>";
                 $totalPrice = $row["foodPrice"] * $row["quantity"];
-                echo "<td class='total-price'>" . $totalPrice . "</td>";
-                echo "<td><button type='button' onclick='deleteItem(" . $row["chooseId"] . ")'>Delete</button></td>";
-                echo "</tr>";
-                $totalCheckedItemsPrice += $totalPrice;
+                echo "<div class='cart-item'>";
+                echo "<div class='cart-item-checkbox'><input type='checkbox' name='checkedItems[]' value='" . $row["chooseId"] . "'></div>"; // Checkbox
+                echo "<div class='cart-item-image'><img src='" . $row["foodImage"] . "' width='100'></div>";
+                echo "<div class='cart-item-details'>";
+                echo "<div class='cart-item-name'>" . $row["foodName"] . "</div>";
+                echo "<div class='cart-item-description'>" . $row["foodDetail"] . "</div>";
+                echo "<div class='cart-item-canteen'>" . $row["canteenName"] . "</div>";
+                echo "<div class='cart-item-quantity'>Quantity: " . $row["quantity"] . "</div>";
+                echo "<div class='cart-item-price'>Price: ￥" . $row["foodPrice"] . "</div>";
+                echo "<div class='cart-item-total-price'>Total: ￥<span class='total-price'>" . $totalPrice . "</span></div>";
+                echo "</div>";
+                echo "<div class='cart-item-delete'><button type='button' onclick='deleteItem(" . $row["chooseId"] . ")'>Delete</button></div>";
+                echo "</div>";
             }
-            // Update the value of the hidden input field with the calculated total price
-            echo "<input type='hidden' name='totalCheckedItemsPrice' value='" . $totalCheckedItemsPrice . "'>";
-            echo "<tr>";
-            echo "<td colspan='8'><strong>Total for Checked Items:</strong></td>";
-            echo "<td id='total-checked-items-price'>￥<strong>" . $totalCheckedItemsPrice . "</strong></td>";
-            echo "</tr>";
+            echo "<input type='hidden' id='totalCheckedItemsPrice' name='totalCheckedItemsPrice' value='0'>";
+            echo "<div class='cart-total'>";
+            echo "<strong>Total for Checked Items:</strong> ￥<span id='total-checked-items-price'>0</span>";
+            echo "</div>";
         } else {
-            echo "<tr><td colspan='9'>No orders found</td></tr>";
+            echo "<div class='cart-empty'>PLease add item into cart first!</div>";
         }
         ?>
-    </table>
+    </div>
     <button type="button" onclick="openPaymentModal()">Select Payment Type</button>
 </form>
 
 <div id="paymentModal" class="modal">
     <div class="modal-content">
-        <p>Total Price: ￥<span id="total-price-in-modal"><?php echo $totalCheckedItemsPrice; ?></span></p>
+        <p>Total Price: ￥<span id="total-price-in-modal">0</span></p>
         <p>Select Payment Type:</p>
         <?php
         require_once "config.php";
@@ -84,11 +71,9 @@ $result = $conn->query($sql);
             echo "No payment types available.";
         }
         ?>
-        <button onclick="closePaymentModal()">取消</button>
+        <button onclick="closePaymentModal()">Cancel</button>
     </div>
 </div>
-
-
 
 <div id="confirmationModal" class="modal">
     <div class="modal-content">
@@ -97,17 +82,18 @@ $result = $conn->query($sql);
         <button onclick="closeModal()">No</button>
     </div>
 </div>
-<script>
 
+<script>
     function updateTotalPrice() {
         let totalCheckedItemsPrice = 0;
         document.querySelectorAll('input[name="checkedItems[]"]:checked').forEach(checkedItem => {
-            const row = checkedItem.closest('tr');
+            const row = checkedItem.closest('.cart-item');
             const priceCell = row.querySelector('.total-price');
             const totalPrice = parseFloat(priceCell.textContent);
             totalCheckedItemsPrice += totalPrice;
         });
         document.getElementById('total-checked-items-price').textContent = totalCheckedItemsPrice.toFixed(2);
+        document.getElementById('totalCheckedItemsPrice').value = totalCheckedItemsPrice.toFixed(2);
     }
 
     document.querySelectorAll('input[name="checkedItems[]"]').forEach(item => {
@@ -132,16 +118,10 @@ $result = $conn->query($sql);
         closePaymentModal();
     }
 
-    // Update total price when the document is loaded
     document.addEventListener('DOMContentLoaded', function () {
         updateTotalPrice();
     });
-</script>
 
-
-
-
-<script>
     function openModal() {
         document.getElementById('confirmationModal').style.display = 'block';
     }
@@ -159,15 +139,9 @@ $result = $conn->query($sql);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onload = function () {
             if (xhr.status === 200) {
-                var row = document.querySelector('input[value="' + chooseId + '"]').closest('tr');
+                var row = document.querySelector('input[value="' + chooseId + '"]').closest('.cart-item');
                 row.remove();
-                let totalCheckedItemsPrice = 0;
-                document.querySelectorAll('input[name="checkedItems[]"]:checked').forEach(checkedItem => {
-                    const priceCell = checkedItem.closest('tr').querySelector('.total-price');
-                    const totalPrice = parseFloat(priceCell.textContent);
-                    totalCheckedItemsPrice += totalPrice;
-                });
-                document.getElementById('total-checked-items-price').textContent = totalCheckedItemsPrice.toFixed(2);
+                updateTotalPrice();
             } else {
                 console.log('Error deleting item');
             }
@@ -176,8 +150,52 @@ $result = $conn->query($sql);
         xhr.send('chooseId=' + chooseId);
     }
 </script>
+
+
+
 </body>
 <style>
+    .cart-container {
+        display: flex;
+        flex-direction: column;
+        /*gap: 10px;*/
+    }
+
+    .cart-item {
+        display: flex;
+        align-items: center;
+        border: 1px solid #ddd;
+        padding: 10px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 5px auto;
+        width: 85%;
+    }
+
+    .cart-item-checkbox,
+    .cart-item-image,
+    .cart-item-details,
+    .cart-item-delete {
+        margin-right: 15px;
+    }
+
+    .cart-item-details {
+        flex-grow: 1;
+    }
+
+    .cart-total {
+        font-weight: bold;
+        margin-top: 20px;
+        text-align: right;
+    }
+
+    .cart-empty {
+        text-align: center;
+        font-size: 18px;
+        color: #999;
+    }
+
     .modal {
         display: none;
         position: fixed;
