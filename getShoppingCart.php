@@ -21,9 +21,9 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h2>Shopping Cart</h2>
 <form method="post" action="process_payment.php">
     <div class="cart-container">
+        <div class="cart-container-title">Shopping Cart</div>
         <?php
         $totalCheckedItemsPrice = 0;
         if ($result->num_rows > 0) {
@@ -33,26 +33,36 @@ $result = $conn->query($sql);
                 echo "<div class='cart-item-checkbox'><input type='checkbox' name='checkedItems[]' value='" . $row["chooseId"] . "'></div>"; // Checkbox
                 echo "<div class='cart-item-image'><img src='" . $row["foodImage"] . "' width='100'></div>";
                 echo "<div class='cart-item-details'>";
+
+                echo "<div class='cart-name-des'>";
                 echo "<div class='cart-item-name'>" . $row["foodName"] . "</div>";
                 echo "<div class='cart-item-description'>" . $row["foodDetail"] . "</div>";
+                echo "</div>";
                 echo "<div class='cart-item-canteen'>" . $row["canteenName"] . "</div>";
                 echo "<div class='cart-item-quantity'>Quantity: " . $row["quantity"] . "</div>";
                 echo "<div class='cart-item-price'>Price: ￥" . $row["foodPrice"] . "</div>";
                 echo "<div class='cart-item-total-price'>Total: ￥<span class='total-price'>" . $totalPrice . "</span></div>";
                 echo "</div>";
-                echo "<div class='cart-item-delete'><button type='button' onclick='deleteItem(" . $row["chooseId"] . ")'>Delete</button></div>";
+
+                echo "<div class='cart-item-delete'><button class='delete' type='button' onclick='deleteItem(" . $row["chooseId"] . ")'>Delete</button></div>";
                 echo "</div>";
             }
             echo "<input type='hidden' id='totalCheckedItemsPrice' name='totalCheckedItemsPrice' value='0'>";
             echo "<div class='cart-total'>";
-            echo "<strong>Total for Checked Items:</strong> ￥<span id='total-checked-items-price'>0</span>";
+            echo "<div>";
+            echo "<strong>Total for Checked Items: ";
+            echo "</div>";
+            echo "<div>";
+            echo "￥<span id='total-checked-items-price'>0</strong></span>";
+            echo "</div>";
             echo "</div>";
         } else {
             echo "<div class='cart-empty'>PLease add item into cart first!</div>";
         }
         ?>
     </div>
-    <button type="button" onclick="openPaymentModal()">Select Payment Type</button>
+    <div class="payment-button"><button type="button"  onclick="openPaymentModal()">Select Payment Type</button></div>
+
 </form>
 
 <div id="paymentModal" class="modal">
@@ -71,14 +81,14 @@ $result = $conn->query($sql);
             echo "No payment types available.";
         }
         ?>
-        <button onclick="closePaymentModal()">Cancel</button>
+        <button class="delete" onclick="closePaymentModal()">Cancel</button>
     </div>
 </div>
 
 <div id="confirmationModal" class="modal">
     <div class="modal-content">
         <p>Are you sure you want to delete this item?</p>
-        <button onclick="confirmDelete()">Yes</button>
+        <button  class="delete" onclick="confirmDelete()">Yes</button>
         <button onclick="closeModal()">No</button>
     </div>
 </div>
@@ -161,6 +171,14 @@ $result = $conn->query($sql);
         /*gap: 10px;*/
     }
 
+    .cart-container-title{
+        width: 85%;
+        margin: auto;
+        font-weight: bold;
+        font-size: 20px;
+        padding: 15px;
+    }
+
     .cart-item {
         display: flex;
         align-items: center;
@@ -179,6 +197,19 @@ $result = $conn->query($sql);
     .cart-item-delete {
         margin-right: 15px;
     }
+    .cart-name-des {
+        display: flex;
+    }
+
+    .cart-name-des .cart-item-description {
+        margin-left: auto;
+        width: 400px;
+        max-width: 400px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
 
     .cart-item-details {
         flex-grow: 1;
@@ -186,14 +217,30 @@ $result = $conn->query($sql);
 
     .cart-total {
         font-weight: bold;
-        margin-top: 20px;
         text-align: right;
+        width: 85%;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
     }
+
+    .cart-total div:last-child {
+        margin-left: auto;
+    }
+
 
     .cart-empty {
         text-align: center;
         font-size: 18px;
         color: #999;
+    }
+
+    .payment-button{
+        font-weight: bold;
+        text-align: right;
+        width: 85%;
+        margin: auto;
     }
 
     .modal {
