@@ -17,6 +17,16 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="styles.css">
     <style>
         .container {
+            margin: auto;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .container .title {
+            text-align: center;
+            color: #333;
+            font-weight: bold!important;
+        }
+        .announcement-container {
             width: 85%;
             margin: auto;
             overflow: hidden;
@@ -24,21 +34,7 @@ $result = $conn->query($sql);
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
-            margin-top: 30px;
-        }
-        .container .title {
-            text-align: center;
-            color: #333;
-            font-weight: bold;
-        }
-        .announcement-container {
-            border-bottom: 1px solid #ccc;
-            padding: 10px 0;
-        }
-
-        .announcement-container:last-child {
-            border-bottom: none;
-            padding-bottom: 0 ;
+            margin-top: 10px;
         }
         .announcement-title {
             font-size: 18px;
@@ -66,7 +62,6 @@ $result = $conn->query($sql);
         while ($row = $result->fetch_assoc()) {
             echo "<div class='announcement-container'>";
             echo "<div class='announcement-title'>" . $row["title"] . "</div>";
-            echo "<div class='announcement-content'>" . $row["content"] . "</div>";
             echo "<div class='announcement-content'>" . $row["content"] . "</div>";
             echo "</div>";
         }
