@@ -23,7 +23,7 @@ $result = $conn->query($sql);
 <body>
 <form method="post" action="process_payment.php">
     <div class="cart-container">
-        <div class="cart-container-title">Shopping Cart</div>
+        <div class="cart-container-title">购物车</div>
         <?php
         $totalCheckedItemsPrice = 0;
         if ($result->num_rows > 0) {
@@ -31,7 +31,7 @@ $result = $conn->query($sql);
                 $totalPrice = $row["foodPrice"] * $row["quantity"];
                 echo "<div class='cart-item'>";
                 echo "<div class='cart-item-checkbox'><input type='checkbox' name='checkedItems[]' value='" . $row["chooseId"] . "'></div>"; // Checkbox
-                echo "<div class='cart-item-image'><img src='" . $row["foodImage"] . "' width='100'></div>";
+                echo "<div class='cart-item-image'><img src='" . $row["foodImage"] . "' ></div>";
                 echo "<div class='cart-item-details'>";
 
                 echo "<div class='cart-name-des'>";
@@ -171,7 +171,8 @@ $result = $conn->query($sql);
         /*gap: 10px;*/
     }
 
-    .cart-container-title{
+    .cart-container-title ,
+    .announcement-container-main-title{
         width: 85%;
         margin: auto;
         font-weight: bold;
@@ -183,7 +184,7 @@ $result = $conn->query($sql);
         display: flex;
         align-items: center;
         border: 1px solid #ddd;
-        padding: 10px;
+        padding: 15px;
         background: white;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -197,6 +198,16 @@ $result = $conn->query($sql);
     .cart-item-delete {
         margin-right: 15px;
     }
+    .cart-item-image{
+        overflow: hidden;
+        border-radius: 10px;
+        display: flex;
+        width:150px;
+    }
+    .cart-item-image img {
+        width: 100%;
+    }
+
     .cart-name-des {
         display: flex;
     }

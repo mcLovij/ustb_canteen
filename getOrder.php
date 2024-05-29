@@ -105,7 +105,7 @@ if ($result->num_rows > 0) {
         border: 1px solid black;
         padding: 20px ;
         width: 90%;
-        max-height: 90vh;fpadd
+        max-height: 90vh;
         overflow: hidden; /* Hide overflow within the content */
         overflow-y: auto; /* Enable vertical scrolling */
         border-radius: 15px;

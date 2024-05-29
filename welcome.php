@@ -21,12 +21,10 @@ $userName = $_SESSION['userName'];
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            flex; align-items: center; justify-content: center
         }
-        button{
-            padding: 5px;
-            border-radius: 5px;
 
-        }
+
 
 
 
@@ -102,19 +100,20 @@ $userName = $_SESSION['userName'];
 
 
         .navbar {
-            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px 20px;
         }
 
         .navbar a {
-            float: left;
-            display: block;
-            text-align: center;
             text-decoration: none;
-            color: black;
-            padding: 14px 16px;
-            margin: 0 2px;
-            border-radius: 10px;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .navbar a:hover {
@@ -127,23 +126,25 @@ $userName = $_SESSION['userName'];
             color: white !important;
         }
 
-        .filer {
-            display: flex;
-            flex-wrap: wrap;
-
+        #searchInput {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
         }
 
-        .filter div:hover {
-            background-color: rgba(72, 71, 71, 0.65);
+        #profileLink {
+            padding: 10px 15px;
+            border-radius: 5px;
+            background-color: #ff6f61;
             color: white;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        .filter_div {
-            display: inline-flex;
-            padding: 14px 16px;
-            margin: 0 2px;
-            border-radius: 10px;
+        #profileLink:hover {
+            background-color: #dd544c;
         }
+
 
     </style>
     <script>
@@ -211,17 +212,16 @@ $userName = $_SESSION['userName'];
     <a href="#" onclick="showDashboard()" id="dashboardLink">首页</a>
     <a href="#" onclick="showOrder()" id="orderLink">购物车</a>
     <a href="#" onclick="showNews()" id="newsLink">公告</a>
+    <input type="text" id="searchInput" onkeyup="filterByName()" placeholder="Search by Food Name...">
     <a href="#" onclick="showProfile()" id="profileLink"><?php require_once "getStudentDetailAction.php"; echo $name; ?></a>
 
 </div>
 <div id="dashboardSection" style="display: none;">
-<!--    --><?php //require_once "getShoppingCart.php"; ?>
-     <?php require_once "getOrder.php"; ?> 
-     <h3>Recommendation</h3>
-    <?php require_once "getRecommendation.php"; ?>
-    <h3>Student Favorite</h3>
-    <?php require_once "getStudentFavorite.php"; ?> 
-    <h3>Food List</h3>
+     <?php require_once "getOrder.php"; ?>
+<!--     <h3>Recommendation</h3>-->
+<!--    --><?php //require_once "getRecommendation.php"; ?>
+<!--    <h3>Student Favorite</h3>-->
+    <?php require_once "getStudentFavorite.php"; ?>
     <?php require_once "getFoodList.php"; ?>
 </div>
 

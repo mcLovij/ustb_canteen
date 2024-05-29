@@ -4,6 +4,7 @@
         color: yellow;
         -webkit-text-stroke-width: 0.5px;
         -webkit-text-stroke-color: black;
+        cursor: pointer;
     }
 
     .star-outline {
@@ -14,31 +15,161 @@
 
     #orderPopup {
         position: fixed;
-        top: 50px;
+        top: 50%;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translate(-50%, -50%);
         background-color: white;
         padding: 20px;
         border: 1px solid black;
         z-index: 1000;
         display: none;
     }
+
+
+    .food-list {
+        width: 85%;
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        text-align: left;
+    }
+
+    .food-list-title {
+        margin: auto;
+        font-weight: bold;
+        font-size: 20px;
+        padding: 15px;
+    }
+
+    .filter {
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .filter_button {
+        display: inline-block;
+        padding: 8px 16px;
+        margin: 0 5px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        transition: background-color 0.3s;
+    }
+
+    .filter_button:hover {
+        background-color: #e0e0e0;
+    }
+
+    .filter_active {
+        background-color: #395039;
+        color: white;
+    }
+    .filter_button input{
+        margin-left: auto;
+    }
+
+    #searchInput {
+        /*height: 46px;*/
+        border-radius: 6px;
+        font-size: 15px;
+        border: 0.5px solid lightgrey;
+        padding: 8px 16px;
+        margin-left: auto;
+        background-image: linear-gradient(135deg, #ffd6d6 40%, #eca2ca);
+        /*margin-bottom: 20px;*/
+    }
+
+    .allFoodsContainer {
+        width: 85%;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        /*justify-content: space-between;*/
+    }
+
+
+    .food-item {
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid #ccc;
+        /*padding: 15px;*/
+        margin-bottom: 15px;
+        margin-right: 15px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+    }
+
+    .food-item img {
+        width: 100%;
+    }
+
+    .food-details {
+        flex: 1;
+        width: 100%;
+    }
+
+    .food-name {
+        color: #0056b3;
+        font-weight: bold;
+        padding: 5px  15px;
+    }
+
+    .food-detail {
+        width: 85%;
+        margin: 5px 15px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .food-location {
+        width: 85%;
+        margin: 5px 15px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .food-rate{
+        color: #e1840e;
+        font-weight: bold;
+    }
+
+    .food-action {
+        width: 85%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 0 15px 15px 15px;
+        justify-content: space-between;
+    }
+
+    .food-action span,
+    .food-action div,
+    .food-action button {
+        /*margin-left: 20px;*/
+    }
 </style>
+
 <script>
     function toggleFavorite(foodId, status) {
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                // Update star icon color based on response
-                if (xhr.responseText == '1') {
-                    document.getElementById('star_' + foodId).classList.remove('star-outline');
-                    document.getElementById('star_' + foodId).classList.add('star-yellow');
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var star = document.getElementById('star_' + foodId);
+                if (xhr.responseText === '1') {
+                    star.classList.remove('star-outline');
+                    star.classList.add('star');
                 } else {
-                    document.getElementById('star_' + foodId).classList.remove('star-yellow');
-                    document.getElementById('star_' + foodId).classList.add('star-outline');
+                    star.classList.remove('star');
+                    star.classList.add('star-outline');
                 }
-
-                // Reload the page
                 window.location.reload();
             }
         };
@@ -49,17 +180,12 @@
 
     function addOrder() {
         var foodId = document.getElementById('orderPopup').getAttribute('data-food-id');
-        var locationIdString = document.getElementById('canteenId').innerText;
-        var locationId = parseInt(locationIdString);
-        // var quantity = document.getElementById('quantityInput').value;
+        var locationId = parseInt(document.getElementById('canteenId').textContent);
         var quantity = document.getElementById('quantityInput').value;
-
-        // You can perform validation here for location and quantity
 
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                // Reload the page or update the order list as needed
+            if (xhr.readyState === 4 && xhr.status === 200) {
                 window.location.reload();
             }
         };
@@ -73,133 +199,71 @@
     }
 
     function showOrderPopup(foodId, foodName, foodImage, foodRate, foodPrice, canteenName, canteenId) {
-        // Show the pop-up div
         document.getElementById('orderPopup').style.display = 'block';
-
-        // Populate food details
         document.getElementById('foodImage').src = foodImage;
         document.getElementById('foodName').textContent = foodName;
-        document.getElementById('foodRate').textContent = foodRate;
-        document.getElementById('foodPrice').textContent = foodPrice;
+        document.getElementById('foodRate').textContent = foodRate + "分";
+        document.getElementById('foodPrice').textContent = "￥" + foodPrice;
         document.getElementById('canteenName').textContent = canteenName;
         document.getElementById('canteenId').textContent = canteenId;
-
-        // Pass foodId to the pop-up div (optional)
         document.getElementById('orderPopup').setAttribute('data-food-id', foodId);
     }
 
-</script>
-
-
-<?php
-require_once "config.php";
-
-// Fetch unique canteen names
-$sql = "SELECT DISTINCT canteenName FROM location";
-$result = $conn->query($sql);
-$canteenNames = array();
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $canteenNames[] = $row['canteenName'];
-    }
-}
-
-// Generate buttons for each canteen
-echo "<div class='filter'><div onclick=\"showAllRows()\" class=\"filter_div filter_button\">Show All</div>";
-foreach ($canteenNames as $index => $canteenName) {
-    echo "<div onclick=\"filterTableByCanteen('$canteenName', this)\" class=\"filter_div filter_button\">$canteenName</div>";
-}
-//echo "</div>";
-?>
-<!-- Add the input field for food name search -->
-<input type="text" id="searchInput" onkeyup="filterByName()" placeholder="Search by Food Name...">
-
-<script>
-    // Function to filter table rows by food name
     function filterByName() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("searchInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("allFoodsTable");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1]; // Index 1 is for food name column
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
+        var input = document.getElementById("searchInput").value.toUpperCase();
+        var items = document.querySelectorAll(".food-item");
+        items.forEach(function(item) {
+            var foodName = item.querySelector(".food-name").textContent.toUpperCase();
+            item.style.display = foodName.indexOf(input) > -1 ? "" : "none";
+        });
     }
-</script>
-</div>
-<script>
+
     function showAllRows() {
-        var rows = document.querySelectorAll("#allFoodsTable tbody tr");
-        for (var i = 0; i < rows.length; i++) {
-            rows[i].style.display = "";
-        }
-        // Remove filter_active class from all buttons
+        var items = document.querySelectorAll(".food-item");
+        items.forEach(function(item) {
+            item.style.display = "";
+        });
         document.querySelectorAll('.filter_button').forEach(button => button.classList.remove('filter_active'));
         document.querySelector('.filter_button:first-child').classList.add('filter_active');
     }
 
     function filterTableByCanteen(canteenName, button) {
-        var rows = document.querySelectorAll("#allFoodsTable tbody tr");
-        for (var i = 0; i < rows.length; i++) {
-            var row = rows[i];
-            var canteenCell = row.getElementsByTagName("td")[3];
-            if (canteenCell) {
-                var rowCanteenName = canteenCell.textContent || canteenCell.innerText;
-                if (rowCanteenName === canteenName) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
-            }
-        }
-        // Remove filter_active class from all buttons and add it to the clicked button
+        var items = document.querySelectorAll(".food-item");
+        items.forEach(function(item) {
+            var canteenCell = item.querySelector(".canteen-name");
+            var rowCanteenName = canteenCell.textContent;
+            item.style.display = rowCanteenName === canteenName ? "" : "none";
+        });
         document.querySelectorAll('.filter_button').forEach(button => button.classList.remove('filter_active'));
-        button.classList.add('filter_active'); // Add class to the clicked button
-    }
-
-    function filterTable() {
-        var filterValue = document.getElementById('filterInput').value.toUpperCase();
-        var rows = document.querySelectorAll("#allFoodsTable tbody tr");
-        for (var i = 0; i < rows.length; i++) {
-            var row = rows[i];
-            var canteenCell = row.getElementsByTagName("td")[3];
-            if (canteenCell) {
-                var canteenName = canteenCell.textContent || canteenCell.innerText;
-                if (canteenName.toUpperCase().indexOf(filterValue) > -1) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
-            }
-        }
+        button.classList.add('filter_active');
     }
 </script>
+<div class="food-list">
+    <div class="food-list-title">食物清单</div>
+    <?php
+    require_once "config.php";
 
+    // Fetch unique canteen names
+    $sql = "SELECT DISTINCT canteenName FROM location";
+    $result = $conn->query($sql);
+    $canteenNames = array();
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $canteenNames[] = $row['canteenName'];
+        }
+    }
 
-<table id="allFoodsTable" border="1">
-    <thead>
-    <tr>
-        <th>Image</th>
-        <th>Food Name</th>
-        <th>Detail</th>
-        <th>CanteenName</th>
-        <th>Floor</th>
-        <th>Rate</th>
-        <th>Price</th>
-        <th>Status</th>
-        <th>Order</th>
-    </tr>
-    </thead>
-    <tbody>
+    // Generate buttons for each canteen
+    echo "<div class='filter'><div onclick=\"showAllRows()\" class=\"filter_button filter_active\">所有的</div>";
+    foreach ($canteenNames as $canteenName) {
+        echo "<div onclick=\"filterTableByCanteen('$canteenName', this)\" class=\"filter_button\">$canteenName</div>";
+    }
+    ?>
+<!--    <input type="text" id="searchInput" onkeyup="filterByName()" placeholder="Search by Food Name...">-->
+    </div>
+</div>
+
+<div id="allFoodsContainer" class="allFoodsContainer">
     <?php
     require_once "config.php";
 
@@ -214,35 +278,35 @@ foreach ($canteenNames as $index => $canteenName) {
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            echo "<tr>";
-            echo "<td><img style='height: 100px;' src='" . $row['foodImage'] . "' alt='" . $row['foodName'] . " '></td>";
-            echo "<td>" . $row['foodName'] . "</td>";
-            echo "<td>" . $row['foodDetail'] . "</td>";
-            echo "<td>" . $row['canteenName'] . "</td>"; // Display canteenName instead of canteenId
-            echo "<td>" . $row['floor'] . "层</td>";
-            echo "<td>" . $row['foodRate'] . "分</td>";
-            echo "<td>￥" . $row['foodPrice'] . "</td>";
+            echo "<div class='food-item'>";
+            echo "<img src='" . $row['foodImage'] . "' alt='" . $row['foodName'] . "'>";
+            echo "<div class='food-details'>";
+            echo "<div class='food-name'>" . $row['foodName'] . "</div>";
+            echo "<div class='food-detail'>" . $row['foodDetail'] . "</div>";
+            echo "<div class='food-location'>";
+            echo "<div class='canteen-name'>" . $row['canteenName'] . "</div>";
+            echo "<div class='floor'>" . $row['floor'] . "层</div>";
             if ($row['status'] == 1) {
-                echo "<td><span id='star_" . $row['foodId'] . "' class='star star-yellow' onclick='toggleFavorite(" . $row['foodId'] . ", 0)'>&#9733;</span></td>";
+                echo "<span id='star_" . $row['foodId'] . "' class='star' onclick='toggleFavorite(" . $row['foodId'] . ", 0)'>&#9733;</span>";
             } else {
-                echo "<td><span id='star_" . $row['foodId'] . "' class='star star-outline' onclick='toggleFavorite(" . $row['foodId'] . ", 1)'>&#9733;</span></td>";
+                echo "<span id='star_" . $row['foodId'] . "' class='star-outline' onclick='toggleFavorite(" . $row['foodId'] . ", 1)'>&#9733;</span>";
             }
-            // Add button to add the item to the order list
-            echo "<td><button onclick='showOrderPopup(" . $row['foodId'] . ", \"" . $row['foodName'] . "\", \"" . $row['foodImage'] . "\", \"" . $row['foodRate'] . "\", " . $row['foodPrice'] . ", \"" . $row['canteenName'] . "\", \"" . $row['canteenId'] . "\")'>Order</button></td>";
-
-            echo "</tr>";
-            echo "</tr>";
+            echo "</div>";
+            echo "</div>";
+            echo "<div class='food-action'>";
+            echo "<div class='food-rate'>" . $row['foodRate'] . "分</div>";
+            echo "<div class='food-price'>￥" . $row['foodPrice'] . "</div>";
+            echo "<button onclick='showOrderPopup(" . $row['foodId'] . ", \"" . $row['foodName'] . "\", \"" . $row['foodImage'] . "\", \"" . $row['foodRate'] . "\", " . $row['foodPrice'] . ", \"" . $row['canteenName'] . "\", \"" . $row['canteenId'] . "\")'>Order</button>";
+            echo "</div>";
+            echo "</div>";
         }
     } else {
-        echo "<tr><td colspan='6'>No food available</td></tr>";
+        echo "<div>No food available</div>";
     }
     ?>
+</div>
 
-    </tbody>
-</table>
-
-<div id="orderPopup"
-     style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; padding: 20px; border: 1px solid #ccc;">
+<div id="orderPopup">
     <h3>Food Details</h3>
     <img id="foodImage" style="height: 100px;">
     <p id="foodName"></p>
@@ -256,4 +320,3 @@ foreach ($canteenNames as $index => $canteenName) {
     <button onclick="addOrder()">Add to Order</button>
     <button onclick="hideOrderPopup()">Cancel</button>
 </div>
-

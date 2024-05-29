@@ -16,12 +16,12 @@ $result = $conn->query($sql);
     <title>Announcement Page</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        .container {
+        .announcement-main-container {
             margin: auto;
             overflow: hidden;
             border-radius: 8px;
         }
-        .container .title {
+        .announcement-main-container .title {
             text-align: center;
             color: #333;
             font-weight: bold!important;
@@ -55,8 +55,8 @@ $result = $conn->query($sql);
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="title">公告</div>
+<div class="announcement-main-container">
+    <div class="announcement-container-main-title">公告</div>
     <?php
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
