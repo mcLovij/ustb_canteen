@@ -11,3 +11,7 @@ RewriteRule ^welcomes$ welcomes.php [L]
 
 # Rewrite rule for logout
 RewriteRule ^logout$ logout.php [L]
+
+
+
+RewriteRule ^food_info$ food_info.php [L]

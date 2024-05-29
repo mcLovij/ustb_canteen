@@ -1,177 +1,3 @@
-<style>
-    .star {
-        font-size: 20px;
-        color: yellow;
-        -webkit-text-stroke-width: 0.5px;
-        -webkit-text-stroke-color: black;
-        cursor: pointer;
-    }
-
-    .star-outline {
-        color: transparent;
-        -webkit-text-stroke-width: 0.5px;
-        -webkit-text-stroke-color: black;
-    }
-
-    #orderPopup {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        padding: 20px;
-        border: 1px solid black;
-        z-index: 1000;
-        display: none;
-    }
-
-
-    .food-list {
-        width: 85%;
-        display: flex;
-        flex-direction: column;
-        margin: auto;
-        text-align: left;
-    }
-
-    .food-list-title {
-        font-weight: bold;
-        font-size: 20px;
-        padding: 15px;
-    }
-
-    .filter {
-        margin-bottom: 10px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-
-    .filter_button {
-        display: inline-block;
-        padding: 8px 16px;
-        margin: 0 5px;
-        cursor: pointer;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        background-color: #f2f2f2;
-        transition: background-color 0.3s;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .filter_button:hover {
-        background-color: #b1b1b1;
-        color: black;
-    }
-
-    .filter_active {
-        background-color: #395039;
-        color: white;
-    }
-
-    .filter_active:hover {
-        color: black;
-    }
-    .filter_button input{
-        margin-left: auto;
-    }
-
-    #searchInput {
-        border-radius: 6px;
-        font-size: 15px;
-        border: 0.5px solid lightgrey;
-        padding: 8px 16px;
-        margin-left: auto;
-        background-image: linear-gradient(135deg, #ffd6d6 40%, #eca2ca);
-        margin-right: 10px;
-    }
-
-    .allFoodsContainer {
-        width: 85%;
-        margin: auto;
-        display: flex;
-        flex-wrap: wrap;
-        /*justify-content: space-between;*/
-    }
-
-
-    .food-item {
-        width: 300px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        border: 1px solid #ccc;
-        /*padding: 15px;*/
-        margin-bottom: 15px;
-        margin-right: 15px;
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        overflow: hidden;
-    }
-
-    .food-item img {
-        width: 100%;
-        transition: width 0.5s;
-    }
-
-    .food-item img:hover {
-        width: 105%;
-    }
-
-
-
-    .food-details {
-        flex: 1;
-        width: 100%;
-    }
-
-    .food-name {
-        color: #0056b3;
-        font-weight: bold;
-        padding: 5px  15px;
-    }
-
-    .food-detail {
-        width: 85%;
-        margin: 5px 15px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    .food-location {
-        width: 85%;
-        margin: 5px 15px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .food-rate{
-        color: #e1840e;
-        font-weight: bold;
-    }
-
-    .food-action {
-        width: 85%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        padding: 0 15px 15px 15px;
-        justify-content: space-between;
-    }
-
-    .food-action div,
-    .food-action button {
-        /*margin-left: 20px;*/
-    }
-    .food-location span{
-        cursor: pointer;
-    }
-
-
-</style>
-
 <script>
     function toggleFavorite(foodId, status) {
         var xhr = new XMLHttpRequest();
@@ -252,6 +78,10 @@
         document.querySelectorAll('.filter_button').forEach(button => button.classList.remove('filter_active'));
         button.classList.add('filter_active');
     }
+
+    function redirectToFoodPage(foodId) {
+        window.location.href = 'food_info?id=' + foodId;
+    }
 </script>
 <div class="food-list">
     <div class="food-list-title">食物清单</div>
@@ -274,8 +104,8 @@
         echo "<div onclick=\"filterTableByCanteen('$canteenName', this)\" class=\"filter_button\">$canteenName</div>";
     }
     ?>
-<!--    <input type="text" id="searchInput" onkeyup="filterByName()" placeholder="Search by Food Name...">-->
-    </div>
+    <!--    <input type="text" id="searchInput" onkeyup="filterByName()" placeholder="Search by Food Name...">-->
+</div>
 </div>
 
 <div id="allFoodsContainer" class="allFoodsContainer">
@@ -294,7 +124,9 @@
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             echo "<div class='food-item'>";
-            echo "<img src='" . $row['foodImage'] . "' alt='" . $row['foodName'] . "'>";
+            echo "<div class='food-item-image'>";
+            echo "<img src='" . $row['foodImage'] . "' alt='" . $row['foodName'] . "' onclick='redirectToFoodPage(" . $row['foodId'] . ")'>";
+            echo "</div>";
             echo "<div class='food-details'>";
             echo "<div class='food-name'>" . $row['foodName'] . "</div>";
             echo "<div class='food-detail'>" . $row['foodDetail'] . "</div>";
@@ -311,7 +143,7 @@
             echo "<div class='food-action'>";
             echo "<div class='food-rate'>" . $row['foodRate'] . "分</div>";
             echo "<div class='food-price'>￥" . $row['foodPrice'] . "</div>";
-            echo "<button onclick='showOrderPopup(" . $row['foodId'] . ", \"" . $row['foodName'] . "\", \"" . $row['foodImage'] . "\", \"" . $row['foodRate'] . "\", " . $row['foodPrice'] . ", \"" . $row['canteenName'] . "\", \"" . $row['canteenId'] . "\")'>Order</button>";
+            echo "<button onclick='showOrderPopup(" . $row['foodId'] . ", \"" . $row['foodName'] . "\", \"" . $row['foodImage'] . "\", \"" . $row['foodRate'] . "\", " . $row['foodPrice'] . ", \"" . $row['canteenName'] . "\", \"" . $row['canteenId'] . "\")'>+</button>";
             echo "</div>";
             echo "</div>";
         }
@@ -332,6 +164,7 @@
     <h3>Quantity : 1</h3>
     <input type="number" id="quantityInput" min="1" value="1" readonly style="display: none;">
     <br><br>
-    <button onclick="addOrder()">Add to Order</button>
-    <button onclick="hideOrderPopup()">Cancel</button>
+    <button onclick="addOrder()">加入购物车</button>
+    <button class="delete" onclick="hideOrderPopup()">取消</button>
 </div>
+
