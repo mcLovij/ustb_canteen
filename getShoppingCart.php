@@ -208,6 +208,7 @@ $result = $conn->query($sql);
         width: 100%;
     }
 
+
     .cart-name-des {
         display: flex;
     }

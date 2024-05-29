@@ -21,14 +21,9 @@ $userName = $_SESSION['userName'];
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
-            flex; align-items: center; justify-content: center
+            flex; align-items: center; justify-content: center;
+            font-size: 16px;
         }
-
-
-
-
-
-
         button {
             appearance: none;
             background-color: #2ea44f;
@@ -105,7 +100,7 @@ $userName = $_SESSION['userName'];
             align-items: center;
             background-color: #ffffff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 10px 20px;
+            padding: 10px 7%;
         }
 
         .navbar a {
@@ -114,6 +109,13 @@ $userName = $_SESSION['userName'];
             padding: 10px 15px;
             border-radius: 5px;
             transition: background-color 0.3s, color 0.3s;
+        }
+        .navbar img{
+            height: 30px;
+            margin-right: 20px;
+        }
+        .navbar img:hover{
+            background-color: transparent;
         }
 
         .navbar a:hover {
@@ -124,13 +126,6 @@ $userName = $_SESSION['userName'];
         .active, .filter_active {
             background-color: #383838;
             color: white !important;
-        }
-
-        #searchInput {
-            padding: 8px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            margin-right: 10px;
         }
 
         #profileLink {
@@ -209,6 +204,7 @@ $userName = $_SESSION['userName'];
 </head>
 <body>
 <div class="navbar">
+    <img src="img/banner/logo.png" alt="贝壳食堂">
     <a href="#" onclick="showDashboard()" id="dashboardLink">首页</a>
     <a href="#" onclick="showOrder()" id="orderLink">购物车</a>
     <a href="#" onclick="showNews()" id="newsLink">公告</a>

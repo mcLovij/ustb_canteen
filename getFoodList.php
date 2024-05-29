@@ -35,7 +35,6 @@
     }
 
     .food-list-title {
-        margin: auto;
         font-weight: bold;
         font-size: 20px;
         padding: 15px;
@@ -57,29 +56,34 @@
         border-radius: 5px;
         background-color: #f2f2f2;
         transition: background-color 0.3s;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     .filter_button:hover {
-        background-color: #e0e0e0;
+        background-color: #b1b1b1;
+        color: black;
     }
 
     .filter_active {
         background-color: #395039;
         color: white;
     }
+
+    .filter_active:hover {
+        color: black;
+    }
     .filter_button input{
         margin-left: auto;
     }
 
     #searchInput {
-        /*height: 46px;*/
         border-radius: 6px;
         font-size: 15px;
         border: 0.5px solid lightgrey;
         padding: 8px 16px;
         margin-left: auto;
         background-image: linear-gradient(135deg, #ffd6d6 40%, #eca2ca);
-        /*margin-bottom: 20px;*/
+        margin-right: 10px;
     }
 
     .allFoodsContainer {
@@ -108,7 +112,14 @@
 
     .food-item img {
         width: 100%;
+        transition: width 0.5s;
     }
+
+    .food-item img:hover {
+        width: 105%;
+    }
+
+
 
     .food-details {
         flex: 1;
@@ -150,11 +161,15 @@
         justify-content: space-between;
     }
 
-    .food-action span,
     .food-action div,
     .food-action button {
         /*margin-left: 20px;*/
     }
+    .food-location span{
+        cursor: pointer;
+    }
+
+
 </style>
 
 <script>
