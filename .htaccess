@@ -14,4 +14,4 @@ RewriteRule ^logout$ logout.php [L]
 
 
 
-RewriteRule ^food_info$ food_info.php [L]
+RewriteRule ^food_detail$ food_detail.php [L]

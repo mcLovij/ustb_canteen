@@ -80,7 +80,7 @@
     }
 
     function redirectToFoodPage(foodId) {
-        window.location.href = 'food_info?id=' + foodId;
+        window.location.href = 'food_detail?id=' + foodId;
     }
 </script>
 <div class="food-list">
@@ -107,6 +107,7 @@
     <!--    <input type="text" id="searchInput" onkeyup="filterByName()" placeholder="Search by Food Name...">-->
 </div>
 </div>
+
 
 <div id="allFoodsContainer" class="allFoodsContainer">
     <?php

@@ -1,4 +1,4 @@
-
+/*welcome*/
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -110,7 +110,7 @@ button.delete:hover {
 #profileLink:hover {
     background-color: #dd544c;
 }
-
+/*food_list*/
 .star {
     font-size: 20px;
     color: yellow;
@@ -285,5 +285,134 @@ button.delete:hover {
 .food-location span{
     cursor: pointer;
 }
+
+
+.comments {
+    /*border: 1px solid #ccc;*/
+    padding: 15px;
+    width: 85%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+}
+.comment{
+    width: 75%;
+}
+.comment-sections{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.comment-title,
+.add-comment-title{
+    width: 100%;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 15px;
+}
+.comment-section{
+    width: 300px;
+    display: flex;
+}
+.profile-pic {
+    margin-right: 10px;
+}
+.profile-pic img {
+    width: 50px;
+    border-radius: 50%;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    margin-bottom: 5px;
+}
+
+.comment-text {
+    margin-bottom: 5px;
+}
+
+.rating {
+    margin-bottom: 5px;
+}
+
+
+.add-comment{
+    width: 25%;
+    margin-left: auto;
+}
+
+.add-comment-title {
+    width: 100%;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 15px;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+textarea, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+select {
+    height: 40px;
+}
+
+.feedback-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.rating {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+    color: orange;
+}
+
+.rating input:checked ~ label {
+    color: orange;
+}
+
+.comment {
+    margin-bottom: 20px;
+}
+
+.comment textarea {
+    width: 100%;
+    height: 100px;
+    resize: none;
+}
+
 
 
