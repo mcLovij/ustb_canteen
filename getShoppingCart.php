@@ -13,14 +13,6 @@ $sql = "SELECT sc.chooseId, fl.foodName, sc.chooseTime, l.canteenName, sc.quanti
         ORDER BY sc.chooseTime DESC";
 $result = $conn->query($sql);
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Checkout</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
 <form method="post" action="process_payment.php">
     <div class="cart-container">
         <div class="cart-container-title">购物车</div>
@@ -160,10 +152,6 @@ $result = $conn->query($sql);
         xhr.send('chooseId=' + chooseId);
     }
 </script>
-
-
-
-</body>
 <style>
     .cart-container {
         display: flex;
@@ -281,4 +269,3 @@ $result = $conn->query($sql);
         margin: 5px;
     }
 </style>
-</html>

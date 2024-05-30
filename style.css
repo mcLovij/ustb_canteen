@@ -333,6 +333,7 @@ button.delete:hover {
 
 .comment-text {
     margin-bottom: 5px;
+    padding-right: 15px;
 }
 
 .rating {

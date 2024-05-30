@@ -9,12 +9,6 @@ $userName = $_SESSION['userName'];
 $sql = "SELECT * from announcement;";
 $result = $conn->query($sql);
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Announcement Page</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
         .announcement-main-container {
             margin: auto;
@@ -53,8 +47,6 @@ $result = $conn->query($sql);
             padding: 20px 0;
         }
     </style>
-</head>
-<body>
 <div class="announcement-main-container">
     <div class="announcement-container-main-title">公告</div>
     <?php
@@ -70,5 +62,3 @@ $result = $conn->query($sql);
     }
     ?>
 </div>
-</body>
-</html>

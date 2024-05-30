@@ -109,17 +109,64 @@
 </div>
 
 
+<!--<div id="allFoodsContainer" class="allFoodsContainer">-->
+<!--    --><?php
+//    require_once "config.php";
+//
+//    // Fetch food list with status for the logged-in user
+//    $sql = "SELECT food_list.*, location.canteenName AS canteenName,
+//        IF(student_favorite.userName IS NULL, 0, 1) AS status
+//        FROM food_list
+//        LEFT JOIN location ON food_list.canteenId = location.canteenId
+//        LEFT JOIN student_favorite ON food_list.foodId = student_favorite.foodId
+//        AND student_favorite.userName = '$userName'";
+//    $result = $conn->query($sql);
+//
+//    if ($result->num_rows > 0) {
+//        while ($row = $result->fetch_assoc()) {
+//            echo "<div class='food-item'>";
+//            echo "<div class='food-item-image'>";
+//            echo "<img src='" . $row['foodImage'] . "' alt='" . $row['foodName'] . "' onclick='redirectToFoodPage(" . $row['foodId'] . ")'>";
+//            echo "</div>";
+//            echo "<div class='food-details'>";
+//            echo "<div class='food-name'>" . $row['foodName'] . "</div>";
+//            echo "<div class='food-detail'>" . $row['foodDetail'] . "</div>";
+//            echo "<div class='food-location'>";
+//            echo "<div class='canteen-name'>" . $row['canteenName'] . "</div>";
+//            echo "<div class='floor'>" . $row['floor'] . "层</div>";
+//            if ($row['status'] == 1) {
+//                echo "<span id='star_" . $row['foodId'] . "' class='star' onclick='toggleFavorite(" . $row['foodId'] . ", 0)'>&#9733;</span>";
+//            } else {
+//                echo "<span id='star_" . $row['foodId'] . "' class='star-outline' onclick='toggleFavorite(" . $row['foodId'] . ", 1)'>&#9733;</span>";
+//            }
+//            echo "</div>";
+//            echo "</div>";
+//            echo "<div class='food-action'>";
+//            echo "<div class='food-rate'>" . $row['foodRate'] . "分</div>";
+//            echo "<div class='food-price'>￥" . $row['foodPrice'] . "</div>";
+//            echo "<button onclick='showOrderPopup(" . $row['foodId'] . ", \"" . $row['foodName'] . "\", \"" . $row['foodImage'] . "\", \"" . $row['foodRate'] . "\", " . $row['foodPrice'] . ", \"" . $row['canteenName'] . "\", \"" . $row['canteenId'] . "\")'>+</button>";
+//            echo "</div>";
+//            echo "</div>";
+//        }
+//    } else {
+//        echo "<div>No food available</div>";
+//    }
+//    ?>
+<!--</div>-->
 <div id="allFoodsContainer" class="allFoodsContainer">
     <?php
     require_once "config.php";
 
-    // Fetch food list with status for the logged-in user
+    // Fetch food list with status for the logged-in user and calculate average rating from comments
     $sql = "SELECT food_list.*, location.canteenName AS canteenName, 
-        IF(student_favorite.userName IS NULL, 0, 1) AS status
-        FROM food_list
-        LEFT JOIN location ON food_list.canteenId = location.canteenId
-        LEFT JOIN student_favorite ON food_list.foodId = student_favorite.foodId 
-        AND student_favorite.userName = '$userName'";
+            IF(student_favorite.userName IS NULL, 0, 1) AS status,
+            IFNULL(AVG(comments.rating), 0) AS averageRating
+            FROM food_list
+            LEFT JOIN location ON food_list.canteenId = location.canteenId
+            LEFT JOIN student_favorite ON food_list.foodId = student_favorite.foodId 
+            AND student_favorite.userName = '$userName'
+            LEFT JOIN comments ON food_list.foodId = comments.foodId
+            GROUP BY food_list.foodId";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -142,9 +189,9 @@
             echo "</div>";
             echo "</div>";
             echo "<div class='food-action'>";
-            echo "<div class='food-rate'>" . $row['foodRate'] . "分</div>";
+            echo "<div class='food-rate'>" . number_format($row['averageRating'], 1) . "分</div>";
             echo "<div class='food-price'>￥" . $row['foodPrice'] . "</div>";
-            echo "<button onclick='showOrderPopup(" . $row['foodId'] . ", \"" . $row['foodName'] . "\", \"" . $row['foodImage'] . "\", \"" . $row['foodRate'] . "\", " . $row['foodPrice'] . ", \"" . $row['canteenName'] . "\", \"" . $row['canteenId'] . "\")'>+</button>";
+            echo "<button onclick='showOrderPopup(" . $row['foodId'] . ", \"" . $row['foodName'] . "\", \"" . $row['foodImage'] . "\", \"" . number_format($row['averageRating'], 1) . "\", " . $row['foodPrice'] . ", \"" . $row['canteenName'] . "\", \"" . $row['canteenId'] . "\")'>+</button>";
             echo "</div>";
             echo "</div>";
         }
@@ -153,6 +200,8 @@
     }
     ?>
 </div>
+
+
 
 <div id="orderPopup">
     <h3>Food Details</h3>

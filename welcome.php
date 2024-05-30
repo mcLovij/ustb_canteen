@@ -1,102 +1,64 @@
 <?php
 session_start();
 
-// Check if user is logged in, if not, redirect to login page
+// Redirect to login page if user is not logged in
 if (!isset($_SESSION['userName'])) {
     header("Location: login");
     exit();
 }
 
-// Get the username from the session
+require_once "getStudentDetailAction.php"; // Include once
+
 $userName = $_SESSION['userName'];
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <link rel="icon" href="<?php require_once "getStudentDetailAction.php"; echo $profile; ?>">
     <title>你好<?php require_once "getStudentDetailAction.php"; echo $name; ?>同学</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-
-    </style>
     <script>
-        function showDashboard() {
-            document.getElementById('dashboardSection').style.display = 'block';
-            document.getElementById('shoppingCartSection').style.display = 'none';
-            document.getElementById('newsSection').style.display = 'none';
-            document.getElementById('profileSection').style.display = 'none';
+        function showSection(sectionId, linkId) {
+            const sections = ['dashboardSection', 'shoppingCartSection', 'newsSection', 'profileSection'];
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                section.style.display = (id === sectionId ? 'block' : 'none');
+            });
 
-            // Apply active class to the dashboard link
-            document.getElementById('dashboardLink').classList.add('active');
-            // Remove active class from other links
-            document.getElementById('orderLink').classList.remove('active');
-            document.getElementById('newsLink').classList.remove('active');
-            document.getElementById('profileLink').classList.remove('active');
+            const links = ['dashboardLink', 'orderLink', 'newsLink', 'profileLink'];
+            links.forEach(id => {
+                const link = document.getElementById(id);
+                if (id === linkId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
         }
 
-        function showOrder() {
-            document.getElementById('dashboardSection').style.display = 'none';
-            document.getElementById('shoppingCartSection').style.display = 'block';
-            document.getElementById('newsSection').style.display = 'none';
-            document.getElementById('profileSection').style.display = 'none';
-
-            // Apply active class to the order link
-            document.getElementById('dashboardLink').classList.remove('active');
-            // Remove active class from other links
-            document.getElementById('orderLink').classList.add('active');
-            document.getElementById('newsLink').classList.remove('active');
-            document.getElementById('profileLink').classList.remove('active');
-        }
-
-        function showNews() {
-            document.getElementById('dashboardSection').style.display = 'none';
-            document.getElementById('shoppingCartSection').style.display = 'none';
-            document.getElementById('newsSection').style.display = 'block';
-            document.getElementById('profileSection').style.display = 'none';
-
-            // Apply active class to the order link
-            document.getElementById('dashboardLink').classList.remove('active');
-            // Remove active class from other links
-            document.getElementById('orderLink').classList.remove('active');
-            document.getElementById('newsLink').classList.add('active');
-            document.getElementById('profileLink').classList.remove('active');
-        }
-
-        function showProfile() {
-            document.getElementById('dashboardSection').style.display = 'none';
-            document.getElementById('shoppingCartSection').style.display = 'none';
-            document.getElementById('newsSection').style.display = 'none';
-            document.getElementById('profileSection').style.display = 'block';
-
-            // Apply active class to the profile link
-            document.getElementById('dashboardLink').classList.remove('active');
-            // Remove active class from other links
-            document.getElementById('orderLink').classList.remove('active');
-            document.getElementById('newsLink').classList.remove('active');
-            document.getElementById('profileLink').classList.add('active');
-        }
-
-        window.onload = showDashboard;
+        window.onload = () => showSection('dashboardSection', 'dashboardLink');
     </script>
 </head>
 <body>
 <div class="navbar">
     <img src="img/banner/logo.png" alt="贝壳食堂">
-    <a href="#" onclick="showDashboard()" id="dashboardLink">首页</a>
-    <a href="#gouwuche" onclick="showOrder()" id="orderLink">购物车</a>
-    <a href="#tixing" onclick="showNews()" id="newsLink">公告</a>
+    <a href="#" onclick="showSection('dashboardSection', 'dashboardLink')" id="dashboardLink">首页</a>
+    <a href="#gouwuche" onclick="showSection('shoppingCartSection', 'orderLink')" id="orderLink">购物车</a>
+    <a href="#tixing" onclick="showSection('newsSection', 'newsLink')" id="newsLink">公告</a>
     <input type="text" id="searchInput" onkeyup="filterByName()" placeholder="Search by Food Name...">
-    <a href="#zhanghao" onclick="showProfile()" id="profileLink"><?php require_once "getStudentDetailAction.php"; echo $name; ?></a>
+    <a href="#zhanghao" onclick="showSection('profileSection', 'profileLink')" id="profileLink"><?php require_once "getStudentDetailAction.php"; echo $name; ?></a>
 </div>
-<div id="dashboardSection" style="display: none;">
-     <?php require_once "getOrder.php"; ?>
-<!--    --><?php //require_once "getRecommendation.php"; ?>
-<!--    --><?php //require_once "getStudentFavorite.php"; ?>
+<div id="dashboardSection"  style="display: none;">
+    <?php require_once "getOrder.php"; ?>
+
+        <?php require_once "getRecommendation.php"; ?>
+        <?php require_once "getStudentFavorite.php"; ?>
     <?php require_once "getFoodList.php"; ?>
 </div>
 
 <div id="shoppingCartSection" style="display: none;">
-<?php require_once "getShoppingCart.php"; ?>
+    <?php require_once "getShoppingCart.php"; ?>
 </div>
 
 <div id="newsSection" style="display: none;">
@@ -109,13 +71,9 @@ $userName = $_SESSION['userName'];
     <?php if (!empty($profile)): ?>
         <img style="height: 50px;" src="<?php echo $profile; ?>" alt="<?php echo $name; ?>"><br>
     <?php endif; ?>
-
-
     <form method="post" action="logout.php"><input type="submit" value="Logout"></form>
     <p>This is the welcome page. You are logged in as <?php echo $userName; ?>.</p>
 </div>
-
-
 
 </body>
 </html>
