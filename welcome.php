@@ -20,13 +20,13 @@ $userName = $_SESSION['userName'];
     <link rel="stylesheet" href="style.css">
     <script>
         function showSection(sectionId, linkId) {
-            const sections = ['dashboardSection', 'shoppingCartSection', 'newsSection', 'profileSection'];
+            const sections = ['dashboardSection', 'shoppingCartSection', 'newsSection','ordersSection', 'profileSection'];
             sections.forEach(id => {
                 const section = document.getElementById(id);
                 section.style.display = (id === sectionId ? 'block' : 'none');
             });
 
-            const links = ['dashboardLink', 'orderLink', 'newsLink', 'profileLink'];
+            const links = ['dashboardLink', 'gouwucheLink', 'newsLink','ordersLink', 'profileLink'];
             links.forEach(id => {
                 const link = document.getElementById(id);
                 if (id === linkId) {
@@ -44,16 +44,15 @@ $userName = $_SESSION['userName'];
 <div class="navbar">
     <img src="img/banner/logo.png" alt="贝壳食堂">
     <a href="#" onclick="showSection('dashboardSection', 'dashboardLink')" id="dashboardLink">首页</a>
-    <a href="#gouwuche" onclick="showSection('shoppingCartSection', 'orderLink')" id="orderLink">购物车</a>
+    <a href="#gouwuche" onclick="showSection('shoppingCartSection', 'gouwucheLink')" id="gouwucheLink">购物车</a>
     <a href="#tixing" onclick="showSection('newsSection', 'newsLink')" id="newsLink">公告</a>
-    <input type="text" id="searchInput" onkeyup="filterByName()" placeholder="Search by Food Name...">
+    <input type="text" id="searchInput" onkeyup="filterByName()" placeholder="食物名称搜索...">
+    <a href="#orders" onclick="showSection('ordersSection', 'ordersLink')" id="ordersLink">Orders</a>
     <a href="#zhanghao" onclick="showSection('profileSection', 'profileLink')" id="profileLink"><?php require_once "getStudentDetailAction.php"; echo $name; ?></a>
 </div>
 <div id="dashboardSection"  style="display: none;">
-    <?php require_once "getOrder.php"; ?>
-
-        <?php require_once "getRecommendation.php"; ?>
-        <?php require_once "getStudentFavorite.php"; ?>
+<!--    --><?php //require_once "getRecommendation.php"; ?>
+<!--    --><?php //require_once "getStudentFavorite.php"; ?>
     <?php require_once "getFoodList.php"; ?>
 </div>
 
@@ -64,7 +63,9 @@ $userName = $_SESSION['userName'];
 <div id="newsSection" style="display: none;">
     <?php require_once "getAnnouncement.php"; ?>
 </div>
-
+<div id="ordersSection"  style="display: none;">
+    <?php require_once "getOrder.php"; ?>
+</div>
 <div id="profileSection" style="display: none;">
     <?php require_once "getStudentDetailAction.php"; ?>
     <p>Your name: <?php echo $name; ?></p>

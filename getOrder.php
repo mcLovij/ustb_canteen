@@ -56,9 +56,9 @@ if ($result->num_rows > 0) {
 } else {
     $orderDetailsHTML = "<div>No orders found for user: $userName</div>";
 }
-//echo "<div id='order-details'>$orderDetailsHTML</div>";
+echo "<div id='order-details'>$orderDetailsHTML</div>";
 ?>
-<button onclick="toggleOrderDetails()">Show Order Details</button>
+<!--<button onclick="toggleOrderDetails()">Show Order Details</button>-->
 
 <div id="order-details-popup" class="order-details-popup">
     <div id="order-details-content" class="order-details-content">
