@@ -56,10 +56,13 @@ if ($result->num_rows > 0) {
 } else {
     $orderDetailsHTML = "<div>No orders found for user: $userName</div>";
 }
-echo "<div id='order-details'>$orderDetailsHTML</div>";
+
 ?>
 <!--<button onclick="toggleOrderDetails()">Show Order Details</button>-->
-
+<div class="order-details" id='order-details'>
+    <div class="order-title">食物清单</div>
+    <?php echo $orderDetailsHTML; ?>
+</div>;
 <div id="order-details-popup" class="order-details-popup">
     <div id="order-details-content" class="order-details-content">
         <div style="display: flex; align-items: center;">
@@ -67,7 +70,6 @@ echo "<div id='order-details'>$orderDetailsHTML</div>";
             <button class="close-btn" onclick="hideOrderDetails()">×</button>
         </div>
         <?php echo $orderDetailsHTML; ?>
-
     </div>
 </div>
 
@@ -103,14 +105,15 @@ echo "<div id='order-details'>$orderDetailsHTML</div>";
         transform: translate(-50%, -50%);
         background-color: white;
         border: 1px solid black;
-        padding: 20px ;
+        padding: 20px;
         width: 90%;
         max-height: 90vh;
         overflow: hidden; /* Hide overflow within the content */
         overflow-y: auto; /* Enable vertical scrolling */
         border-radius: 15px;
     }
-    .order-details-content button{
+
+    .order-details-content button {
         border-radius: 50%;
         width: 25px;
         height: 25px;
@@ -118,57 +121,78 @@ echo "<div id='order-details'>$orderDetailsHTML</div>";
         margin-bottom: 10px;
     }
 
+    .order-details {
+        width: 85%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+    }
+    .order-title{
+        width: 100%;
+        font-weight: bold;
+        font-size: 20px;
+        padding: 15px;
 
-
-
+    }
 
     .order {
-        background-color: #f9f9f9;
+        margin: auto;
         border: 1px solid #ccc;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
         padding: 10px;
-        border-radius: 15px;
+        width: 100%;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     }
+
     .order-info {
         border-bottom: 1px solid #ddd;
         display: flex;
         width: 100%;
         justify-content: space-between;
     }
+
     .order-item {
         border-bottom: 1px solid #ddd;
         padding: 10px;
     }
+
     .order-item .item1 {
         display: flex;
     }
+
     .order-item .item1 .image img {
         width: 100px;
         border-radius: 10px;
     }
-    .order-item .item1 .item2-1
-    ,.order-item .item1 .item2-3{
+
+    .order-item .item1 .item2-1, .order-item .item1 .item2-3 {
         display: flex;
         flex-direction: column;
         padding: 10px;
     }
-    .order-item .item1 .item2-2{
+
+    .order-item .item1 .item2-2 {
         padding: 10px;
         margin-left: auto;
     }
-    .order-item .item1 .item2-3{
+
+    .order-item .item1 .item2-3 {
         text-align: end;
     }
-    .order-item .item1 .item2-1 div:last-child
-    ,.order-item .item1 .item2-3 div:last-child{
+
+    .order-item .item1 .item2-1 div:last-child, .order-item .item1 .item2-3 div:last-child {
         margin-top: auto;
     }
-    .order-item .item1 .item2-1 div:last-child{
+
+    .order-item .item1 .item2-1 div:last-child {
         max-width: 250px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
     }
+
     .order-item:last-child {
         border-bottom: none;
     }

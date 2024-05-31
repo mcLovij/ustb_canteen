@@ -7,7 +7,7 @@ if (!isset($_SESSION['userName'])) {
     exit();
 }
 
-require_once "getStudentDetailAction.php"; // Include once
+require_once "getStudentDetailAction.php";
 
 $userName = $_SESSION['userName'];
 ?>
@@ -51,6 +51,18 @@ $userName = $_SESSION['userName'];
     <a href="#zhanghao" onclick="showSection('profileSection', 'profileLink')" id="profileLink"><?php require_once "getStudentDetailAction.php"; echo $name; ?></a>
 </div>
 <div id="dashboardSection"  style="display: none;">
+    <form method="post" action="resetPassword.php">
+        <label for="oldPassword">Old Password:</label>
+        <input type="password" id="oldPassword" name="oldPassword" required>
+        <br>
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" name="newPassword" required>
+        <br>
+        <label for="confirmPassword">Confirm New Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+        <br>
+        <input type="submit" value="Reset Password">
+    </form>
 <!--    --><?php //require_once "getRecommendation.php"; ?>
 <!--    --><?php //require_once "getStudentFavorite.php"; ?>
     <?php require_once "getFoodList.php"; ?>
@@ -72,9 +84,16 @@ $userName = $_SESSION['userName'];
     <?php if (!empty($profile)): ?>
         <img style="height: 50px;" src="<?php echo $profile; ?>" alt="<?php echo $name; ?>"><br>
     <?php endif; ?>
-    <form method="post" action="logout.php"><input type="submit" value="Logout"></form>
+
+
+    <form method="post" action="logout.php">
+        <input type="submit" value="Logout">
+    </form>
+
+
     <p>This is the welcome page. You are logged in as <?php echo $userName; ?>.</p>
 </div>
+
 
 </body>
 </html>

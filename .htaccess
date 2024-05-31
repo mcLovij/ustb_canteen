@@ -15,3 +15,6 @@ RewriteRule ^logout$ logout.php [L]
 
 
 RewriteRule ^food_detail$ food_detail.php [L]
+
+RewriteRule ^resetPassword$ resetPassword.php [L]
+
