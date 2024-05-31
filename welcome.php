@@ -86,9 +86,9 @@ $userName = $_SESSION['userName'];
         .profile-info{
             border-bottom: gray 1px solid;
             padding-bottom: 15px;
-            width: 80%;
             display: flex;
             flex-direction: row;
+            width: 80%;
             margin-right: 20%;
         }
         .profile-info-edit{
@@ -98,37 +98,62 @@ $userName = $_SESSION['userName'];
             border-radius: 50px;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
         }
 
 
 
-        .account-security, .reset-password {
-            padding: 20px;
-            margin: 10px 0;
-            border: 2px solid #14b114;
-            border-radius: 5px;
-            text-align: center;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .account-security:hover, .reset-password:hover {
-            background-color: #14b114;
-            color: white;
-        }
-
-        .account-security a, .reset-password a {
+        .profile-info-action{
             text-decoration: none;
-            color: inherit;
-            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            margin-right: auto;
+        }
+        .account-security, .reset-password {
+            text-align: left;
+            padding: 10px;
+            /*margin: 5px 0;*/
+            /*margin-left: auto;*/
+            /*border-bottom: 2px solid #14b114;*/
+            border-radius: 10px;
+            border: transparent solid 1px;
+            /*width: 20%;*/
+            /*transition: background-color 0.3s, color 0.3s;*/
+            text-decoration: none;
+            cursor: pointer;
         }
 
-        .account-security a:hover, .reset-password a:hover {
-            text-decoration: underline;
+        .account-security:hover, .reset-password:hover{
+            /*border: gray solid 1px;*/
+            color: darkgray;
         }
+
     </style>
 
 
 
+
+
+
+
+
+
+<!--    --><?php //require_once "getRecommendation.php"; ?>
+<!--    --><?php //require_once "getStudentFavorite.php"; ?>
+    <?php require_once "getFoodList.php"; ?>
+</div>
+
+<div id="shoppingCartSection" style="display: none;">
+    <?php require_once "getShoppingCart.php"; ?>
+</div>
+
+<div id="newsSection" style="display: none;">
+    <?php require_once "getAnnouncement.php"; ?>
+</div>
+<div id="ordersSection"  style="display: none;">
+    <?php require_once "getOrder.php"; ?>
+</div>
+<div id="profileSection" style="display: none;">
     <div class="profile-section">
         <div class="profile-image-container">
             <div class="profile-image <?php
@@ -163,19 +188,20 @@ $userName = $_SESSION['userName'];
             <div class="profile-info">
                 <div class="profile-info-name-and-status">
                     <div class="profile-info-name"><?php echo $name; ?>同学</div>
-                    <div class="profile-info-status">Level<?php  echo $answeredCount;?></div>
+                    <div class="profile-info-status">Level: <?php  echo $answeredCount;?></div>
                 </div>
-                <div class="profile-info-edit">🖊️编辑个人信息</div>
+                <div onclick='redirectToAccountActionPage("edit_information")' class="profile-info-edit">🖊️编辑个人信息</div>
             </div>
             <div class="profile-info-action">
-                <a href="setsecurity"><div class="account-security">Account Security</div></a>
-                <a href="resetpassword"><div class="reset-password">ResetPassword</div></a>
+                <div onclick='redirectToAccountActionPage("set_security")' class="account-security">Account Security</div>
+                <div onclick='redirectToAccountActionPage("reset_password")' class="reset-password">Reset Password</div>
             </div>
 
-
-
-
-
+            <script>
+                function redirectToAccountActionPage(action) {
+                    window.location.href = 'account?action=' + action;
+                }
+            </script>
 
             <form method="post" action="logout.php">
                 <input type="submit" value="Logout">
@@ -183,26 +209,6 @@ $userName = $_SESSION['userName'];
         </div>
     </div>
 
-
-
-
-
-<!--    --><?php //require_once "getRecommendation.php"; ?>
-<!--    --><?php //require_once "getStudentFavorite.php"; ?>
-    <?php require_once "getFoodList.php"; ?>
-</div>
-
-<div id="shoppingCartSection" style="display: none;">
-    <?php require_once "getShoppingCart.php"; ?>
-</div>
-
-<div id="newsSection" style="display: none;">
-    <?php require_once "getAnnouncement.php"; ?>
-</div>
-<div id="ordersSection"  style="display: none;">
-    <?php require_once "getOrder.php"; ?>
-</div>
-<div id="profileSection" style="display: none;">
 </div>
 
 

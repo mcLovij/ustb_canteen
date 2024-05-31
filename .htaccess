@@ -18,3 +18,5 @@ RewriteRule ^food_detail$ food_detail.php [L]
 
 RewriteRule ^resetpassword$ resetpassword.php [L]
 
+RewriteRule ^account$ account.php [L]
+
