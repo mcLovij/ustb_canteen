@@ -16,7 +16,7 @@ $userName = $_SESSION['userName'];
 <html>
 <head>
     <link rel="icon" href="<?php require_once "getStudentDetailAction.php"; echo $profile; ?>">
-    <title>你好<?php require_once "getStudentDetailAction.php"; echo $name; ?>同学</title>
+    <title><?php require_once "getStudentDetailAction.php"; echo $name; ?> 同学好</title>
     <link rel="stylesheet" href="style.css">
     <script>
         function showSection(sectionId, linkId) {
@@ -51,18 +51,7 @@ $userName = $_SESSION['userName'];
     <a href="#zhanghao" onclick="showSection('profileSection', 'profileLink')" id="profileLink"><?php require_once "getStudentDetailAction.php"; echo $name; ?></a>
 </div>
 <div id="dashboardSection"  style="display: none;">
-    <form method="post" action="resetPassword.php">
-        <label for="oldPassword">Old Password:</label>
-        <input type="password" id="oldPassword" name="oldPassword" required>
-        <br>
-        <label for="newPassword">New Password:</label>
-        <input type="password" id="newPassword" name="newPassword" required>
-        <br>
-        <label for="confirmPassword">Confirm New Password:</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" required>
-        <br>
-        <input type="submit" value="Reset Password">
-    </form>
+    <a href="resetpassword">ResetPassword</a>
 <!--    --><?php //require_once "getRecommendation.php"; ?>
 <!--    --><?php //require_once "getStudentFavorite.php"; ?>
     <?php require_once "getFoodList.php"; ?>
