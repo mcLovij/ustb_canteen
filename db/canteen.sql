@@ -11,11 +11,32 @@
  Target Server Version : 80032
  File Encoding         : 65001
 
- Date: 29/05/2024 22:21:26
+ Date: 31/05/2024 14:36:13
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for account_security
+-- ----------------------------
+DROP TABLE IF EXISTS `account_security`;
+CREATE TABLE `account_security`  (
+  `questionID` int(0) NULL DEFAULT NULL,
+  `userName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `answer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  INDEX `questionID`(`questionID`) USING BTREE,
+  INDEX `userName`(`userName`) USING BTREE,
+  CONSTRAINT `account_security_ibfk_1` FOREIGN KEY (`questionID`) REFERENCES `questions_list` (`questionId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `account_security_ibfk_2` FOREIGN KEY (`userName`) REFERENCES `students` (`userName`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of account_security
+-- ----------------------------
+BEGIN;
+INSERT INTO `account_security` VALUES (1, 'student1', 'koko');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for announcement
@@ -51,13 +72,13 @@ CREATE TABLE `comments`  (
   INDEX `userName`(`userName`) USING BTREE,
   CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`foodID`) REFERENCES `food_list` (`foodId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`userName`) REFERENCES `students` (`userName`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of comments
 -- ----------------------------
 BEGIN;
-INSERT INTO `comments` VALUES (1, 1, 'student1', '太好吃喽', 5), (2, 1, 'student2', '好好好好好好', 4);
+INSERT INTO `comments` VALUES (1, 1, 'student1', '太好吃喽太好吃喽太好吃喽太好吃喽太好吃喽太好吃喽太好吃喽太好吃喽太好吃喽', 5), (2, 1, 'student2', '好好好好好好', 4), (3, 2, 'student2', '还不错', 5), (18, 2, 'student1', '难吃死了', 2), (19, 2, 'student1', 'hmmmmm', 5), (20, 1, 'student1', 'yummmy', 5);
 COMMIT;
 
 -- ----------------------------
@@ -77,7 +98,7 @@ CREATE TABLE `food_list`  (
   PRIMARY KEY (`foodId`) USING BTREE,
   INDEX `canteenId`(`canteenId`) USING BTREE,
   CONSTRAINT `food_list_ibfk_1` FOREIGN KEY (`canteenId`) REFERENCES `location` (`canteenId`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of food_list
@@ -94,7 +115,7 @@ CREATE TABLE `location`  (
   `canteenId` int(0) NOT NULL AUTO_INCREMENT,
   `canteenName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`canteenId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of location
@@ -116,13 +137,13 @@ CREATE TABLE `order_history`  (
   PRIMARY KEY (`historyId`) USING BTREE,
   INDEX `orderId`(`orderId`) USING BTREE,
   CONSTRAINT `order_history_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `orders` (`orderId`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of order_history
 -- ----------------------------
 BEGIN;
-INSERT INTO `order_history` VALUES (15, 48539609, 16.40, '2024-05-26 20:44:44', 2), (16, 45907142, 28.90, '2024-05-29 19:13:37', 3);
+INSERT INTO `order_history` VALUES (15, 48539609, 16.40, '2024-05-26 20:44:44', 2), (16, 45907142, 28.90, '2024-05-29 19:13:37', 3), (17, 58575302, 14.90, '2024-05-29 22:27:46', 2), (18, 94390840, 16.40, '2024-05-31 13:55:34', 2);
 COMMIT;
 
 -- ----------------------------
@@ -149,7 +170,7 @@ CREATE TABLE `orders`  (
 -- Records of orders
 -- ----------------------------
 BEGIN;
-INSERT INTO `orders` VALUES (45907142, 'student1', 1, 1, 0, 1), (45907142, 'student1', 2, 2, 0, 1), (45907142, 'student1', 3, 1, 0, 1), (48539609, 'student1', 2, 2, 0, 1), (48539609, 'student1', 3, 1, 0, 1);
+INSERT INTO `orders` VALUES (45907142, 'student1', 1, 1, 0, 1), (45907142, 'student1', 2, 2, 0, 1), (45907142, 'student1', 3, 1, 0, 1), (48539609, 'student1', 2, 2, 0, 1), (48539609, 'student1', 3, 1, 0, 1), (58575302, 'student1', 2, 2, 0, 1), (58575302, 'student1', 4, 2, 0, 1), (94390840, 'student2', 2, 2, 0, 1), (94390840, 'student2', 3, 1, 0, 1);
 COMMIT;
 
 -- ----------------------------
@@ -160,13 +181,30 @@ CREATE TABLE `payment`  (
   `paymentId` int(0) NOT NULL AUTO_INCREMENT,
   `paymentType` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`paymentId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of payment
 -- ----------------------------
 BEGIN;
 INSERT INTO `payment` VALUES (1, '微信'), (2, '支付宝'), (3, '银行卡');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for questions_list
+-- ----------------------------
+DROP TABLE IF EXISTS `questions_list`;
+CREATE TABLE `questions_list`  (
+  `questionId` int(0) NOT NULL AUTO_INCREMENT,
+  `question` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
+  PRIMARY KEY (`questionId`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of questions_list
+-- ----------------------------
+BEGIN;
+INSERT INTO `questions_list` VALUES (1, 'What is your first pet name?'), (2, 'Where is your home town?'), (3, 'What is your favorite color?'), (4, 'What is your favorite food?'), (5, 'What is your favorite movie?'), (6, 'What was your first girlfriend\'s name?'), (7, 'What is your favorite song?'), (8, 'What is your favorite book?');
 COMMIT;
 
 -- ----------------------------
@@ -204,13 +242,13 @@ CREATE TABLE `shopping_cart`  (
   CONSTRAINT `shopping_cart_ibfk_1` FOREIGN KEY (`userName`) REFERENCES `students` (`userName`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `shopping_cart_ibfk_2` FOREIGN KEY (`foodId`) REFERENCES `food_list` (`foodId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `shopping_cart_ibfk_3` FOREIGN KEY (`canteenId`) REFERENCES `location` (`canteenId`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 95618727 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 95618728 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of shopping_cart
 -- ----------------------------
 BEGIN;
-INSERT INTO `shopping_cart` VALUES (13488366, 'student1', 1, 1, '2024-05-29 20:02:45', 1), (36933553, 'student1', 2, 2, '2024-05-29 19:14:04', 1), (68733408, 'student2', 2, 2, '2024-05-29 15:30:50', 1);
+INSERT INTO `shopping_cart` VALUES (13488366, 'student1', 1, 1, '2024-05-29 20:02:45', 1), (46284202, 'student1', 2, 2, '2024-05-30 16:08:17', 1), (74129523, 'student1', 4, 2, '2024-05-30 14:59:59', 1);
 COMMIT;
 
 -- ----------------------------
@@ -227,7 +265,7 @@ CREATE TABLE `staff`  (
 -- Records of staff
 -- ----------------------------
 BEGIN;
-INSERT INTO `staff` VALUES ('staff1', 'pw1'), ('staff2', 'pw2');
+INSERT INTO `staff` VALUES ('staff1', '$2y$10$ZQi50NGLAegURYL3tYuSz.LDQneVi.xTzEmBUhIHIed8TFvLc.csW'), ('staff2', '$2y$10$4xwrlvpFkFZ5LoC/BxMZp.UWwuXWJWhGiD/Lu1WEyO1WuRt/.x9GS');
 COMMIT;
 
 -- ----------------------------
@@ -296,16 +334,16 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `students`;
 CREATE TABLE `students`  (
-                             `userName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-                             `password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-                             PRIMARY KEY (`userName`) USING BTREE
+  `userName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`userName`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of students
 -- ----------------------------
 BEGIN;
-INSERT INTO `students` VALUES ('student1', 'password1'), ('student2', 'password2'), ('student3', 'password3');
+INSERT INTO `students` VALUES ('default', '$2y$10$4xwrlvpFkFZ5LoC/BxMZp.UWwuXWJWhGiD/Lu1WEyO1WuRt/.x9GS'), ('student1', '$2y$10$/9TQkWtYXxdQLotVEzMjRuJzltOhHturMz5sTYBVr9cl7WWOJZWZK'), ('student2', '$2y$10$DmzwfsbUCqwY6Lio80r9TeBROMQZB/IYXxtyxB9/cXzu5xS80ieX6'), ('student3', 'password3');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

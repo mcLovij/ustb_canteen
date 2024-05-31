@@ -1,7 +1,7 @@
 <?php
-session_start();
+session_start(); // Ensure session is started
 if (!isset($_SESSION['userName'])) {
-    header("Location: login.php");
+    header("Location: login.phpppp");
     exit();
 }
 require_once "config.php";
