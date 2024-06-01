@@ -25,7 +25,7 @@ if (!$questionsResult) {
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 
 if ($action == 'set_security') {
-    ?>
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,14 +33,14 @@ if ($action == 'set_security') {
     <link rel="icon" href="<?php echo $profile; ?>">
     <title><?php echo $name; ?> 同学</title>
     <link rel="stylesheet" href="style.css">
-    hahahahah
 </head>
 <body>
-    <?php
-    echo "set_security";
+<?php
+echo "set_security";
 } elseif ($action == 'edit_information') {
     echo "edit_information";
-    } elseif ($action == 'reset_password') {
+
+} elseif ($action == 'reset_password') {
     ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -50,6 +50,9 @@ if ($action == 'set_security') {
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+    <?php if (isset($_GET['error'])): ?>
+        <p class="error"><?php echo htmlspecialchars($_GET['error']); ?></p>
+    <?php endif; ?>
     <form method="post" action="resetPasswordAction.php">
         <label for="oldPassword">Old Password:</label>
         <input type="password" id="oldPassword" name="oldPassword" required>

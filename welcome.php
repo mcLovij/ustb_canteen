@@ -134,26 +134,6 @@ $userName = $_SESSION['userName'];
 
 
 
-
-
-
-
-<!--    --><?php //require_once "getRecommendation.php"; ?>
-<!--    --><?php //require_once "getStudentFavorite.php"; ?>
-    <?php require_once "getFoodList.php"; ?>
-</div>
-
-<div id="shoppingCartSection" style="display: none;">
-    <?php require_once "getShoppingCart.php"; ?>
-</div>
-
-<div id="newsSection" style="display: none;">
-    <?php require_once "getAnnouncement.php"; ?>
-</div>
-<div id="ordersSection"  style="display: none;">
-    <?php require_once "getOrder.php"; ?>
-</div>
-<div id="profileSection" style="display: none;">
     <div class="profile-section">
         <div class="profile-image-container">
             <div class="profile-image <?php
@@ -208,6 +188,26 @@ $userName = $_SESSION['userName'];
             </form>
         </div>
     </div>
+
+
+
+
+<!--    --><?php //require_once "getRecommendation.php"; ?>
+<!--    --><?php //require_once "getStudentFavorite.php"; ?>
+    <?php require_once "getFoodList.php"; ?>
+</div>
+
+<div id="shoppingCartSection" style="display: none;">
+    <?php require_once "getShoppingCart.php"; ?>
+</div>
+
+<div id="newsSection" style="display: none;">
+    <?php require_once "getAnnouncement.php"; ?>
+</div>
+<div id="ordersSection"  style="display: none;">
+    <?php require_once "getOrder.php"; ?>
+</div>
+<div id="profileSection" style="display: none;">
 
 </div>
 

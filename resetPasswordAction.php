@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check if new password and confirm password match
     if ($newPassword !== $confirmPassword) {
-        echo "<script>alert('New password and confirmation do not match.'); window.location.href='welcome';</script>";
+        header("Location: account?action=reset_password&error=" . urlencode('New password and confirmation do not match.'));
         exit();
     }
 
@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $updateOldStmt->execute();
                             $updateOldStmt->close();
                         } else {
-                            echo "<script>alert('Error updating old password to hashed value.'); window.location.href='resetpassword';</script>";
+                            header("Location: account?action=reset_password&error=" . urlencode('Error updating old password to hashed value.'));
                             exit();
                         }
                     }
@@ -73,24 +73,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if ($updateStmt = $conn->prepare($updateQuery)) {
                         $updateStmt->bind_param("ss", $newHashedPassword, $userName);
                         if ($updateStmt->execute()) {
-                            echo "<script>alert('Password has been successfully updated. You will be logged out.'); window.location.href='logout.php';</script>";
+                            header("Location: logout?message=" . urlencode('Password has been successfully updated. You will be logged out.'));
                         } else {
-                            echo "<script>alert('Error updating password.'); window.location.href='resetpassword';</script>";
+                            header("Location: account?action=reset_password&error=" . urlencode('Error updating password.'));
                         }
                         $updateStmt->close();
                     }
                 } else {
-                    echo "<script>alert('Old password verification failed.'); window.location.href='resetpassword';</script>";
+                    header("Location: account?action=reset_password&error=" . urlencode('Old password verification failed.'));
                 }
             } else {
-                echo "<script>alert('Error preparing statement.'); window.location.href='welcome';</script>";
+                header("Location: account?action=reset_password&error=" . urlencode('Error preparing statement.'));
             }
         } else {
-            echo "<script>alert('Security answer verification failed.'); window.location.href='welcome';</script>";
+            header("Location: account?action=reset_password&error=" . urlencode('安全答案验证失败。'));
             exit();
         }
     } else {
-        echo "<script>alert('Error preparing statement.'); window.location.href='welcome';</script>";
+        header("Location: account?action=reset_password&error=" . urlencode('Error preparing statement.'));
         exit();
     }
 
