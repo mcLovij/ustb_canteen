@@ -25,18 +25,73 @@ if (!$questionsResult) {
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 
 if ($action == 'set_security') {
-?>
+    ?>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <link rel="icon" href="<?php echo $profile; ?>">
+        <title><?php echo $name; ?> Set Security Questions</title>
+        <link rel="stylesheet" href="style.css">
+        <script>
+            function updateQuestions() {
+                const selects = document.querySelectorAll('select');
+                const selectedValues = Array.from(selects).map(select => select.value);
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="icon" href="<?php echo $profile; ?>">
-    <title><?php echo $name; ?> 同学</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-<?php
-echo "set_security";
+                selects.forEach(select => {
+                    const options = select.querySelectorAll('option');
+                    options.forEach(option => {
+                        if (selectedValues.includes(option.value) && option.value !== select.value) {
+                            option.style.display = 'none';
+                        } else {
+                            option.style.display = '';
+                        }
+                    });
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const selects = document.querySelectorAll('select');
+                selects.forEach(select => {
+                    select.addEventListener('change', updateQuestions);
+                });
+                updateQuestions();
+            });
+        </script>
+    </head>
+    <body>
+    <?php if (isset($_GET['error'])): ?>
+        <p class="error"><?php echo htmlspecialchars($_GET['error']); ?></p>
+    <?php endif; ?>
+    <form method="post" action="setSecurityQuestionAction.php">
+        <?php
+        if ($questionsResult->num_rows > 0) {
+            $questions = [];
+            while ($row = $questionsResult->fetch_assoc()) {
+                $questions[] = $row;
+            }
+            for ($i = 1; $i <= 3; $i++) {
+                echo "<label for='question$i'>Choose a question:</label><br>";
+                echo "<select id='question$i' name='questionId$i' required>";
+                echo "<option value=''>Select a question</option>";
+                foreach ($questions as $question) {
+                    echo "<option value='" . htmlspecialchars($question['questionId']) . "'>" . htmlspecialchars($question['question']) . "</option>";
+                }
+                echo "</select><br>";
+                echo "<label for='answer$i'>Your Answer:</label><br>";
+                echo "<input type='text' id='answer$i' name='answer$i'><br><br>";
+            }
+        } else {
+            echo "No security questions found.";
+        }
+        ?>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <input type="submit" value="Set Security Questions">
+    </form>
+    </body>
+    </html>
+    <?php
+    echo "set_security";
 } elseif ($action == 'edit_information') {
     echo "edit_information";
 
