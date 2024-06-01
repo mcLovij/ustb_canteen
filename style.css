@@ -197,8 +197,6 @@ button.delete:hover {
     padding: 8px 16px;
     margin-left: auto;
     margin-right: auto;
-    /*background-image: linear-gradient(135deg, #ffd6d6 40%, #eca2ca);*/
-    /*margin-right: 10px;*/
 }
 
 .allFoodsContainer {
@@ -206,7 +204,6 @@ button.delete:hover {
     margin: auto;
     display: flex;
     flex-wrap: wrap;
-    /*justify-content: space-between;*/
 }
 
 
@@ -216,7 +213,6 @@ button.delete:hover {
     flex-direction: column;
     align-items: center;
     border: 1px solid #ccc;
-    /*padding: 15px;*/
     margin-bottom: 15px;
     margin-right: 15px;
     background-color: white;
@@ -235,7 +231,6 @@ button.delete:hover {
 .food-item img:hover {
     transform: scale(105%);
     transition: ease-in-out 0.3s;
-    /*width: 105%;*/
     cursor: pointer;;
 }
 
@@ -283,7 +278,6 @@ button.delete:hover {
 
 .food-action div,
 .food-action button {
-    /*margin-left: 20px;*/
 }
 .food-location span{
     cursor: pointer;
@@ -291,7 +285,6 @@ button.delete:hover {
 
 
 .comments {
-    /*border: 1px solid #ccc;*/
     padding: 15px;
     width: 85%;
     margin: auto;
@@ -453,8 +446,8 @@ select {
     padding: 20px;
     width: 90%;
     max-height: 90vh;
-    overflow: hidden; /* Hide overflow within the content */
-    overflow-y: auto; /* Enable vertical scrolling */
+    overflow: hidden;
+    overflow-y: auto;
     border-radius: 15px;
 }
 
@@ -607,6 +600,23 @@ select {
     animation: blink-green 1.5s infinite;
 }
 
+.error-message {
+    background-color: #fce4e4;
+    border: 1px solid #fcc2c3;
+    float: left;
+    padding: 20px 30px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-text {
+    color: #cc0033;
+    font-weight: bold;
+    text-shadow: 1px 1px rgba(250,250,250,.3);
+}
+
 
 
 
@@ -617,7 +627,6 @@ select {
 .cart-container {
     display: flex;
     flex-direction: column;
-    /*gap: 10px;*/
 }
 
 .cart-container-title ,

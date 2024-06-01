@@ -106,7 +106,9 @@ if ($action == 'set_security') {
     </head>
     <body>
     <?php if (isset($_GET['error'])): ?>
-        <p class="error"><?php echo htmlspecialchars($_GET['error']); ?></p>
+    <div class="error-message">
+        <span class="error-text"><?php echo htmlspecialchars($_GET['error']); ?></span>
+    </div>
     <?php endif; ?>
     <form method="post" action="resetPasswordAction.php">
         <label for="oldPassword">Old Password:</label>
