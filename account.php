@@ -93,7 +93,7 @@ if ($action == 'set_security') {
     <?php
     echo "set_security";
 } elseif ($action == 'edit_information') {
-    echo "//PLz Fix this lol , edit_information";
+    echo "edit_information";
 
 } elseif ($action == 'reset_password') {
     ?>
