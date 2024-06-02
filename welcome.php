@@ -51,89 +51,22 @@ $userName = $_SESSION['userName'];
     <a href="#zhanghao" onclick="showSection('profileSection', 'profileLink')" id="profileLink"><?php require_once "getStudentDetailAction.php"; echo $name; ?></a>
 </div>
 <div id="dashboardSection"  style="display: none;">
-    <style>
-        .profile-section{
-            width: 85%;
-            display: flex;
-            flex-direction: row;
-            margin: auto;
-            padding-top: 20px;
-        }
-        .profile-image-container{
-            /*width: 200px;*/
+    <?php require_once "getRecommendation.php"; ?>
+    <?php require_once "getStudentFavorite.php"; ?>
+    <?php require_once "getFoodList.php"; ?>
+</div>
 
-        }
-        .profile-image{
-            width: 100px;
-            height: 100px;
-            border-radius: 100px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 15px;
-        }
-        .profile-image img{
-            width: 99%;
-        }
-        .profile-infos{
-            width: 100%;
-            padding-left: 20px;
-            display: flex;
-            flex-direction: column;
-            /*border: red solid 1px;*/
-        }
-        .profile-info{
-            border-bottom: gray 1px solid;
-            padding-bottom: 15px;
-            display: flex;
-            flex-direction: row;
-            width: 80%;
-            margin-right: 20%;
-        }
-        .profile-info-edit{
-            margin-left: auto;
-            padding: 8px 20px;
-            border: gray 1px solid;
-            border-radius: 50px;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
+<div id="shoppingCartSection" style="display: none;">
+    <?php require_once "getShoppingCart.php"; ?>
+</div>
 
-
-
-        .profile-info-action{
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            margin-right: auto;
-        }
-        .account-security, .reset-password {
-            text-align: left;
-            padding: 10px;
-            /*margin: 5px 0;*/
-            /*margin-left: auto;*/
-            /*border-bottom: 2px solid #14b114;*/
-            border-radius: 10px;
-            border: transparent solid 1px;
-            /*width: 20%;*/
-            /*transition: background-color 0.3s, color 0.3s;*/
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .account-security:hover, .reset-password:hover{
-            /*border: gray solid 1px;*/
-            color: darkgray;
-        }
-
-    </style>
-
-
-
-
-
+<div id="newsSection" style="display: none;">
+    <?php require_once "getAnnouncement.php"; ?>
+</div>
+<div id="ordersSection"  style="display: none;">
+    <?php require_once "getOrder.php"; ?>
+</div>
+<div id="profileSection" style="display: none;">
     <div class="profile-section">
         <div class="profile-image-container">
             <div class="profile-image <?php
@@ -188,27 +121,6 @@ $userName = $_SESSION['userName'];
             </form>
         </div>
     </div>
-
-
-
-
-<!--    --><?php //require_once "getRecommendation.php"; ?>
-<!--    --><?php //require_once "getStudentFavorite.php"; ?>
-    <?php require_once "getFoodList.php"; ?>
-</div>
-
-<div id="shoppingCartSection" style="display: none;">
-    <?php require_once "getShoppingCart.php"; ?>
-</div>
-
-<div id="newsSection" style="display: none;">
-    <?php require_once "getAnnouncement.php"; ?>
-</div>
-<div id="ordersSection"  style="display: none;">
-    <?php require_once "getOrder.php"; ?>
-</div>
-<div id="profileSection" style="display: none;">
-
 </div>
 
 

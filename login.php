@@ -1,17 +1,20 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login</title>
+    <link rel="icon" href="img/banner/logo.svg">
+    <title>登录</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <h2>Login Form</h2>
 
-<?php
-if(isset($_GET['error']) && $_GET['error'] == 1) {
-    echo "<p style='color:red;'>Invalid username or password</p>";
-}
-?>
+<?php if (isset($_GET['error'])): ?>
+    <div class="error-message">
+        <span class="error-text"><?php echo htmlspecialchars($_GET['error']); ?></span>
+    </div>
+<?php endif; ?>
 
 <form method="post" action="loginAction.php">
     <label for="userName">Username:</label><br>

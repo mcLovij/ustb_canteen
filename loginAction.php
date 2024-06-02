@@ -31,12 +31,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         exit();
                     } else {
                         // Login failed
-                        header("Location: login?error=1"); // Redirect to login page with error parameter
+                        header("Location: login?error=" . urlencode('学生账号或密码不正确！'));
                         exit();
                     }
                 } else {
                     // Login failed
-                    header("Location: login?error=1"); // Redirect to login page with error parameter
+                    header("Location: login?error=" . urlencode('学生账户不存在！'));
                     exit();
                 }
             } else {
@@ -67,12 +67,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         exit();
                     } else {
                         // Login failed
-                        header("Location: login?error=1"); // Redirect to login page with error parameter
+                        header("Location: login?error=" . urlencode('员工账号或密码不正确！'));
                         exit();
                     }
                 } else {
                     // Login failed
-                    header("Location: login?error=1"); // Redirect to login page with error parameter
+                    header("Location: login?error=" . urlencode('员工账户不存在！'));
                     exit();
                 }
             } else {
@@ -81,12 +81,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         else {
             // Invalid user type
-            header("Location: login?error=1"); // Redirect to login page with error parameter
+            header("Location: login?error=" . urlencode('无效的用户类型！'));
             exit();
         }
     } else {
         // Invalid request
-        header("Location: login?error=1"); // Redirect to login page with error parameter
+        header("Location: login?error=" . urlencode('无效的请求！'));
         exit();
     }
 }
