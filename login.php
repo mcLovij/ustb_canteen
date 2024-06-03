@@ -15,7 +15,7 @@
         <span class="error-text"><?php echo htmlspecialchars($_GET['error']); ?></span>
     </div>
 <?php endif; ?>
-
+//TODO add login capcha
 <form method="post" action="loginAction.php">
     <label for="userName">Username:</label><br>
     <input type="text" id="userName" name="userName"><br>
